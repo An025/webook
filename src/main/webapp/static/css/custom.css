@@ -64,3 +64,54 @@
 .form-check-input{
     margin: 0;
 }
+
+.jumbotron{
+    margin-bottom: 0;
+    border-radius: 0;
+    padding: 20px;
+}
+#logo
+{
+    background-color: #55A4A6;
+}
+
+#loginBar {
+    background-color: #1E777B;
+}
+
+#loginBar a
+{
+    color: #BDE6E8;
+}
+
+#footer{
+    background-color: #1E777B;
+    margin-top: 50px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 0;
+    color: #BDE6E8;
+}
+
+.btn-outline-success:hover, .btn-outline-success:active, .btn-outline-success:visited
+{
+    background-color: #55A4A6 !important;
+    color: #BDE6E8;
+}
+.btn-outline-success
+{
+    background-color: #BDE6E8; !important;
+    border-color: #1E777B;
+    color: #1E777B;
+}
+#nav{
+    margin-bottom: 50px;
+}
+
+
+.form-check-input{
+    position: absolute;
+    margin-top: 0.5rem;
+    margin-left: -4rem;
+}
+
