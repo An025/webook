@@ -26,14 +26,16 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script src="/static/js/main.js"></script>
 </head>
 
 <body>
 
 <div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
+    <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/logo.png'" alt="" />
+
 </div>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -50,11 +52,14 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="category">
                     <div class="form-check" th:each="cat : ${categories}">
-                        <input class="dropdown-item form-check-input " type="checkbox" value="" id="categoryCheckbox">
+                        <input class="dropdown-item form-check-input " type="checkbox" th:value="${cat.name}" value="" id="categoryCheckbox">
                         <label class="dropdown-item form-check-label" for="categoryCheckbox" th:text="${cat.name}">
                             Default checkbox
                         </label>
+
                     </div>
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="filter" type="submit">Search</button>
+
 <!--                    <a class="dropdown-item" href="#">Action</a>-->
 <!--                    <a class="dropdown-item" href="#">Another action</a>-->
 <!--                    <div class="dropdown-divider"></div>-->
@@ -67,7 +72,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="supplier">
                     <div class="form-check" th:each="supplier : ${suppliers}">
-                        <input class="dropdown-item form-check-input " type="checkbox" value="" id="supplierCheckbox">
+                        <input class="dropdown-item form-check-input " type="checkbox"  th:value="${supplier.name}" value="" id="supplierCheckbox">
                         <label class="dropdown-item form-check-label" for="supplierCheckbox" th:text="${supplier.name}">
                             Default checkbox
                         </label>
@@ -85,7 +90,6 @@
     <div class="card">
         <strong th:text="${category.name}">Category Title</strong>
     </div>
-
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card">
@@ -106,9 +110,34 @@
         </div>
     </div>
 
+
+
+
 </div>
 
 <div th:replace="footer.html :: copy"></div>
+
+<template id="productsTemplate">
+    <div  class="row">
+        <div class="col col-sm-12 col-md-6 col-lg-4">
+            <div class="card">
+                <img class="" src="http://placehold.it/400x250/000/fff"  id="product-img" alt="" />
+                <div class="card-header">
+                    <h4 class="card-title" id="product-name"></h4>
+                    <p class="card-text" id="product-description"></p>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="lead" id="product-price"></p>
+                    </div>
+                    <div class="card-text">
+                        <a class="btn btn-success" href="#">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
 
 </body>
 </html>
