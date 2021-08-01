@@ -4,8 +4,34 @@ window.onload = function (){
 
 function init(){
 
-    let searchButton = document.getElementById("filter");
-    searchButton.addEventListener("click", getDataFilteredByCategory);
+    let searchButton = document.getElementById("filter")
+    searchButton.addEventListener("click", ()=>{
+        check();
+        // getDataFilteredByCategory
+    });
+
+    function check() {
+        let formCategory = document.getElementsByClassName("check-category");
+        console.log(formCategory);
+        let allCategories =[];
+        let checkedCategories =[];
+        for(checkbox of formCategory){
+            allCategories.push(checkbox.value);
+        }
+        for(checkbox of formCategory){
+            if (checkbox.checked === true){
+                checkedCategories.push(checkbox.value);
+            }
+        }
+
+        if (checkedCategories.length == 0){
+            return allCategories;
+        }
+        else{
+            return checkedCategories;
+        }
+        document.getElementById("categoryCheckbox").checked = true;
+    }
 
     function getDataFilteredByCategory(){
 
@@ -31,11 +57,6 @@ function init(){
         while (container.firstChild) {
             container.removeChild(container.firstChild);
             }
-        // let container = document.querySelector('.container');
-        // container.remove();
-        // let newContainer = document.createElement('div');
-        // newContainer.classList.add('container');
-
     }
 
     function displayProductCards(dataName, dataDesc, dataPrice){

@@ -51,9 +51,9 @@
                     Category
                 </a>
                 <div class="dropdown-menu" aria-labelledby="category">
-                    <div class="form-check" th:each="cat : ${categories}">
-                        <input class="dropdown-item form-check-input " type="checkbox" th:value="${cat.name}" value="" id="categoryCheckbox">
-                        <label class="dropdown-item form-check-label" for="categoryCheckbox" th:text="${cat.name}">
+                    <div class="form-check" id="form-category" th:each="cat : ${categories}">
+                        <input class="dropdown-item form-check-input check-category" type="checkbox" th:value="${cat.name}" value="" id="categoryCheckbox">
+                        <label class="dropdown-item form-check-label " for="categoryCheckbox" th:text="${cat.name}">
                             Default checkbox
                         </label>
 
@@ -72,7 +72,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="supplier">
                     <div class="form-check" th:each="supplier : ${suppliers}">
-                        <input class="dropdown-item form-check-input " type="checkbox"  th:value="${supplier.name}" value="" id="supplierCheckbox">
+                        <input class="dropdown-item form-check-input" type="checkbox"  th:value="${supplier.name}" value="" id="supplierCheckbox">
                         <label class="dropdown-item form-check-label" for="supplierCheckbox" th:text="${supplier.name}">
                             Default checkbox
                         </label>
