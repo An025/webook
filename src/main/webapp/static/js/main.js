@@ -7,12 +7,11 @@ function init(){
     let searchButton = document.getElementById("filter")
     searchButton.addEventListener("click", ()=>{
         check();
-        // getDataFilteredByCategory
+        getDataFilteredByCategory();
     });
 
     function check() {
         let formCategory = document.getElementsByClassName("check-category");
-        console.log(formCategory);
         let allCategories =[];
         let checkedCategories =[];
         for(checkbox of formCategory){
@@ -43,28 +42,28 @@ function init(){
     }
 
     function getSingleData (datas){
-        clearContainer();
+        clearDiv();
         for(data of datas){
             displayProductCards(data.name, data.description, data.defaultPrice);
         }
     }
 
 
-    function clearContainer(){
-        const container = document.querySelector('.container');
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-            }
+    function clearDiv() {
+        const products = document.querySelector('#products');
+        while (products.firstChild) {
+            products.removeChild(products.firstChild);
+        }
     }
 
     function displayProductCards(dataName, dataDesc, dataPrice){
-        const container = document.querySelector('.container');
+        const products = document.querySelector('#products');
         const template = document.querySelector("#productsTemplate");
         const clone = document.importNode(template.content, true);
         clone.querySelector('#product-name').textContent = dataName;
         clone.querySelector('#product-description').textContent = dataDesc;
         clone.querySelector('#product-price').textContent = dataPrice;
-        container.appendChild(clone);
+        products.appendChild(clone);
     }
 
 
