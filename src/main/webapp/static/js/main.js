@@ -23,14 +23,12 @@ function init(){
                 checkedCategories.push(checkbox.value);
             }
         }
-
         if (checkedCategories.length == 0){
             return allCategories;
         }
         else{
             return checkedCategories;
         }
-        document.getElementById("categoryCheckbox").checked = true;
     }
 
     function getDataFilteredByCategory(){
