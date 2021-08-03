@@ -6,50 +6,63 @@ function init(){
 
     let searchButton = document.getElementById("filter")
     searchButton.addEventListener("click", ()=>{
-        check();
-        getDataFilteredByCategory();
+        let categoriesForFilter = check("check-category");
+        let suppliersForFilter = check("check-supplier");
+        getData(categoriesForFilter, suppliersForFilter);
+
+
     });
 
-    function check() {
-        let formCategory = document.getElementsByClassName("check-category");
-        let allCategories =[];
-        let checkedCategories =[];
-        for(checkbox of formCategory){
-            allCategories.push(checkbox.value);
+    function check(checkBy) {
+        let checkboxElements = document.getElementsByClassName(checkBy);
+        let allElements =[];
+        let checkedElements =[];
+        for(checkbox of checkboxElements){
+            allElements.push(checkbox.value);
         }
-        for(checkbox of formCategory){
+        for(checkbox of checkboxElements){
             if (checkbox.checked === true){
-                checkedCategories.push(checkbox.value);
+                checkedElements.push(checkbox.value);
             }
         }
+        console.log(allElements);
+        console.log(checkedElements);
 
-        if (checkedCategories.length == 0){
-            return allCategories;
+        if (checkedElements.length == 0){
+            return allElements;
         }
         else{
-            return checkedCategories;
+            return checkedElements;
         }
-        document.getElementById("categoryCheckbox").checked = true;
+
     }
 
-    function getDataFilteredByCategory(){
+    function filterByLists(categories, suppliers, data){
+        clearDiv();
+        data
+            .filter(filtered => categories.includes(filtered.productCategory.name) && suppliers.includes(filtered.supplier.name))
+            // .map(filtered => console.log(filtered));
+            .map(filtered => displayProductCards(filtered.name, filtered.description, filtered.defaultPrice));
+    }
 
+    function getData(categories, suppliers){
+        let dataByCat;
         fetch("/getdata")
             .then(response=> response.json())
             // .then(data => console.log(data));
             .then(data => {
-
-                getSingleData(data)
+                filterByLists(categories, suppliers, data);
+                // getSingleData(data)
             });
     }
 
-    function getSingleData (datas){
-        clearDiv();
-        for(data of datas){
-            displayProductCards(data.name, data.description, data.defaultPrice);
-        }
-    }
-
+    // function getSingleData (datas){
+    //     console.log(datas);
+    //     clearDiv();
+    //     for(data of datas){
+    //         displayProductCards(data.name, data.description, data.defaultPrice);
+    //     }
+    // }
 
     function clearDiv() {
         const products = document.querySelector('#products');

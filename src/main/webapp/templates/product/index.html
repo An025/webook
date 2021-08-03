@@ -95,7 +95,7 @@
                 <div class="dropdown-menu" aria-labelledby="supplier">
                     <div class="form-check" th:each="supplier : ${suppliers}">
                         <div class="input-group">
-                            <input class="dropdown-item form-check-input" type="checkbox"  th:value="${supplier.name}" value="" id="supplierCheckbox">
+                            <input class="dropdown-item form-check-input check-supplier" type="checkbox"  th:value="${supplier.name}" value="" id="supplierCheckbox">
                             <label class="dropdown-item form-check-label" for="supplierCheckbox" th:text="${supplier.name}">
                                 Default checkbox
                             </label>
