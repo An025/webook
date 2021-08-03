@@ -56,7 +56,7 @@
 
 <div class="jumbotron text-center" id="logo">
     <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/logo.png'" width="200" height="150" alt="" />
-    <a href="/cart"><img class="cartlogo cart" th:attr="src='/static/img/cartLogo.jpg'" width="100" height="100"alt=""/></a>
+    <img class="cartlogo cart" th:attr="src='/static/img/cartLogo.jpg'" width="100" height="100"alt="" />
     <div id="counter-box" class="cart">0</div>
     </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
@@ -111,57 +111,5 @@
         </form>
     </div>
 </nav>
-<div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
-    </div>
-    <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
-            <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
-                    </div>
-                    <div class="card-text">
-                        <a th:id="${prod.id}" class="btn btn-success add-to-cart" href="#">Add to cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-</div>
-
-<div th:replace="footer.html :: copy"></div>
-
-<template id="productsTemplate">
-    <div class="col col-sm-12 col-md-6 col-lg-4" >
-
-        <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff"  id="product-img" alt="" />
-                <div class="card-header">
-                    <h4 class="card-title" id="product-name"></h4>
-                    <p class="card-text" id="product-description"></p>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p class="lead" id="product-price"></p>
-                    </div>
-                    <div class="card-text">
-                        <a class="btn btn-success add-to-cart" href="#">Add to cart</a>
-                    </div>
-                </div>
-        </div>
-    </div>
-</template>
-
 </body>
 </html>

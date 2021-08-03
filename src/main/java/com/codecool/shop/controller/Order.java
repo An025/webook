@@ -24,7 +24,7 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/addToCart/*"})
 public class Order extends HttpServlet {
-    private List<Product> order = new ArrayList<>();
+    static private List<Product> order = new ArrayList<>();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
