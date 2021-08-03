@@ -2,13 +2,25 @@ window.onload = function (){
     init()
 }
 
-function init(){
+function init() {
 
     let searchButton = document.getElementById("filter")
-    searchButton.addEventListener("click", ()=>{
+    searchButton.addEventListener("click", () => {
         check();
         getDataFilteredByCategory();
     });
+
+
+    function addToCart(productID){
+        fetch("/addToCart/" + productID)
+            .then(response=> response.json())
+            .then(numberOfItemsInCart => updateCartItemCounter(numberOfItemsInCart))
+            }
+
+    function updateCartItemCounter(numberOfItemsInCart){
+        console.log(numberOfItemsInCart);
+        document.getElementById('counter-box').innerText = numberOfItemsInCart;
+    }
 
     function check() {
         let formCategory = document.getElementsByClassName("check-category");
@@ -41,10 +53,17 @@ function init(){
             });
     }
 
-    function getSingleData (datas){
+    function getSingleData (datas) {
         clearDiv();
-        for(data of datas){
-            displayProductCards(data.name, data.description, data.defaultPrice);
+        for (data of datas) {
+            displayProductCards(data.name, data.description, data.defaultPrice, data.id);
+        }
+        let addToCartButtons = document.querySelectorAll("#add-to-cart")
+        for (let button of addToCartButtons) {
+            button.addEventListener("click", () => {
+                let productID = button.className;
+                addToCart(productID);
+            });
         }
     }
 
@@ -56,15 +75,16 @@ function init(){
         }
     }
 
-    function displayProductCards(dataName, dataDesc, dataPrice){
+    function displayProductCards(dataName, dataDesc, dataPrice, dataID){
         const products = document.querySelector('#products');
         const template = document.querySelector("#productsTemplate");
         const clone = document.importNode(template.content, true);
         clone.querySelector('#product-name').textContent = dataName;
+        clone.querySelector('#add-to-cart').className = dataID;
         clone.querySelector('#product-description').textContent = dataDesc;
         clone.querySelector('#product-price').textContent = dataPrice;
         products.appendChild(clone);
-    }
+        }
 
 
 }
