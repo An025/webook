@@ -10,6 +10,14 @@ function init() {
         getDataFilteredByCategory();
     });
 
+    let addToCartButtons = document.querySelectorAll(".add-to-cart")
+    for (let button of addToCartButtons) {
+        button.addEventListener("click", () => {
+            let productID = button.id;
+            addToCart(productID);
+        });
+    }
+
 
     function addToCart(productID){
         fetch("/addToCart/" + productID)
@@ -58,10 +66,10 @@ function init() {
         for (data of datas) {
             displayProductCards(data.name, data.description, data.defaultPrice, data.id);
         }
-        let addToCartButtons = document.querySelectorAll("#add-to-cart")
+        let addToCartButtons = document.querySelectorAll(".add-to-cart")
         for (let button of addToCartButtons) {
             button.addEventListener("click", () => {
-                let productID = button.className;
+                let productID = button.id;
                 addToCart(productID);
             });
         }
@@ -80,7 +88,7 @@ function init() {
         const template = document.querySelector("#productsTemplate");
         const clone = document.importNode(template.content, true);
         clone.querySelector('#product-name').textContent = dataName;
-        clone.querySelector('#add-to-cart').className = dataID;
+        clone.querySelector('.add-to-cart').id = dataID;
         clone.querySelector('#product-description').textContent = dataDesc;
         clone.querySelector('#product-price').textContent = dataPrice;
         products.appendChild(clone);
