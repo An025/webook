@@ -87,7 +87,6 @@
                         <div class="form-check" id="form-category" th:each="cat : ${categories}">
                             <div class="input-group">
                                 <input class="dropdown-item form-check-input check-category" type="checkbox" th:value="${cat.name}" value="" id="categoryCheckbox">
-
                                 <label class="dropdown-item form-check-label " for="categoryCheckbox" th:text="${cat.name}">
                                     Default checkbox
                                 </label>

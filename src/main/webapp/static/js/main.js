@@ -4,14 +4,25 @@ window.onload = function (){
 
 function init(){
 
+    let clearFilterButton = document.getElementById("clear-filter")
+    clearFilterButton.addEventListener("click", ()=> {
+        clearCheckboxes(document.getElementsByClassName("check-category"));
+        clearCheckboxes(document.getElementsByClassName("check-supplier"));
+
+    });
+
     let searchButton = document.getElementById("filter")
     searchButton.addEventListener("click", ()=>{
         let categoriesForFilter = check("check-category");
         let suppliersForFilter = check("check-supplier");
         getData(categoriesForFilter, suppliersForFilter);
-
-
     });
+
+    function clearCheckboxes(checkboxes) {
+        for(checkbox of checkboxes){
+            checkbox.checked = false;
+        }
+    }
 
     function check(checkBy) {
         let checkboxElements = document.getElementsByClassName(checkBy);
