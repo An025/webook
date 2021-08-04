@@ -69,16 +69,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-blue my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
 </nav>
 <div class="container-page">
-    <div class="row">
+    <div class="row" id="row">
         <div class="sidebar container col-3">
-            <div class="card">
-                <button class="btn btn-outline-success my-2 my-sm-0" id="filter" type="submit">Search</button>
-                <button class="btn btn-outline-success my-2 my-sm-0" id="clear-filter" type="submit">Clear filter</button>
+            <div class="card" >
+                <button class="btn btn-outline-blue my-2 my-sm-0" id="filter" type="submit">Search</button>
+                <button class="btn btn-outline-blue my-2 my-sm-0" id="clear-filter" type="submit">Clear filter</button>
                 <article class="filter-group">
                     <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside1" data-abc="true" aria-expanded="false" class="collapsed"> <i class="icon-control fa fa-chevron-down"></i>
                         <h6 class="title">Categories </h6>
@@ -113,7 +113,7 @@
                 </article>
             </div>
         </div>
-        <div class="container content-container col-9">
+        <div class="container content-container col col-som-12 col-md-9 ">
             <div class="card">
                 <strong th:text="${category.name}">Category Title</strong>
             </div>

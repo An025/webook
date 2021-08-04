@@ -100,25 +100,30 @@
     color: #BDE6E8;
 }
 
-.btn-outline-success:hover, .btn-outline-success:active, .btn-outline-success:visited
+.btn-outline-blue:hover, .btn-outline-blue:active, .btn-outline-blue:visited
 {
     background-color: #55A4A6 !important;
     color: #BDE6E8;
+    border-color: #1E777B;
 }
 
-.btn-outline-success
+.btn-outline-blue
 {
-    background-color: #BDE6E8; !important;
-    border-color: #1E777B;
-    color: #1E777B;
+    background-color: #fff; !important;
+    border-color: #55A4A6;
+    color: #55A4A6;
 }
 #nav{
     margin-bottom: 50px;
 }
+
+.navbar-collapse{
+    justify-content: flex-end;
+}
 .form-check-input{
     position: absolute;
     margin-top: 0.5rem;
-    margin-left: -4rem;
+    margin-left: -9rem;
 }
 
 
@@ -242,4 +247,59 @@ a {
     padding-left: 1.5rem
 }
 /*until here copied for sidebar filter*/
+@media screen and (max-width: 1450px) {
+    .form-check-input{
+        margin-left: -8rem;
+    }
+}
 
+@media screen and (max-width: 1350px) {
+    .form-check-input{
+        margin-left: -7rem;
+    }
+}
+
+@media screen and (max-width: 1250px) {
+    .form-check-input{
+        margin-left: -6rem;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .form-check-input{
+        margin-left: -5rem;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .form-check-input{
+        margin-left: -4rem;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .form-check-input{
+        margin-left: -3rem;
+
+    }
+
+}
+
+@media screen and (max-width: 737px) {
+    .sidebar{
+        width: 1%;
+        visibility: hidden;
+        margin-top: 150px;
+        height: 1px
+    }
+    #row{
+        display: inline-block;
+        margin-top: -140px; !important;
+        flex-wrap: nowrap;
+    }
+
+
+
+
+
+}
