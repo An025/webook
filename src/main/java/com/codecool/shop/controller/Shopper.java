@@ -1,13 +1,16 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.ProductService;
+import com.codecool.shop.service.ProductServiceHelper;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
@@ -23,23 +26,26 @@ import java.util.List;
 
 
 @WebServlet(urlPatterns = {"/addToCart/*"})
-public class Order extends HttpServlet {
-    static private List<Product> order = new ArrayList<>();
+public class Shopper extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // finds item by id in product list
+        // put items into cart
+        // sends out the number of items in cart
         String[] pathInfo = request.getPathInfo().split("/");
         int productId = Integer.parseInt(pathInfo[1]);
-        System.out.println(productId);
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao = SupplierDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
+        ProductService productService = ProductServiceHelper.getDataForProduct();
         Product productPutIntoCart = productService.getProduct(productId);
-        order.add(productPutIntoCart);
-        System.out.println(order);
+        CartDao cartDao = CartDaoMem.getInstance();
+        cartDao.add(productPutIntoCart);
+        int numberOfItemsInCart = 0;
+        for (Product product: productService.getAllProductFromCart()){
+            numberOfItemsInCart = numberOfItemsInCart + product.quantity;
+        }
         PrintWriter out = response.getWriter();
-        out.print(order.size());
+        System.out.println(numberOfItemsInCart);
+        out.print(numberOfItemsInCart);
         out.flush();
     }
 }
