@@ -50,7 +50,6 @@ public class Shopper extends HttpServlet {
             }
         }
         PrintWriter out = response.getWriter();
-        System.out.println(numberOfItemsInCart);
         out.print(numberOfItemsInCart);
         out.flush();
     }

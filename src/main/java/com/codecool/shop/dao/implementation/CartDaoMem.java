@@ -17,6 +17,8 @@ public class CartDaoMem implements CartDao {
 
     private ArrayList<Product> data = new ArrayList<>();
     private static CartDaoMem instance = null;
+    private BillingInfoMem billingInfoMem;
+    private float totalPrice;
 
     /* A private Constructor prevents any other class from instantiating.
      */
@@ -40,16 +42,27 @@ public class CartDaoMem implements CartDao {
         }
     }
 
-//    @Override
-//    public Product find(int id) {
-////        return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
-//    }
+    @Override
+    public Product find(int id) {
+        return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+    }
 
-//    @Override
-//    public void remove(int id) {
-//        data.remove(find(id));
-            @Override
-            public ArrayList<Product> getAll () {
-                return data;
-            }
+    @Override
+    public void remove(int id) {
+        data.remove(find(id));
+    }
+
+    @Override
+    public void setBillingInfo(BillingInfoMem billingInfoMem) {
+        billingInfoMem = billingInfoMem;
+    }
+
+        @Override
+        public ArrayList<Product> getAll () {
+            return data;
         }
+    }
+
+
+
+

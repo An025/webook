@@ -4,6 +4,7 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.BillingInfoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -54,6 +55,13 @@ public class ProductService{
         return cartDao.getAll();
     }
 
+    public void removeProductFromCart(int ID){
+        cartDao.remove(ID);
+    }
+
+    public void setAddress(BillingInfoMem billingInfoMem) {
+        cartDao.setBillingInfo(billingInfoMem);
+    }
 
 
 }

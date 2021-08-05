@@ -25,7 +25,6 @@ public class CartReview extends HttpServlet {
 //            System.out.println(productService.getAllProductFromCart());
             Gson gson = new Gson();
             String jsonString = gson.toJson(productService.getAllProductFromCart());
-            System.out.println(jsonString);
 //            Type type = new TypeToken<HashMap<Product, Integer>>(){}.getType();
 //            HashMap<Product, Integer> clonedMap = gson.fromJson(jsonString, type);
             PrintWriter out = response.getWriter();

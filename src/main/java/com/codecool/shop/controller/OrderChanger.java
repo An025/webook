@@ -15,33 +15,32 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-@WebServlet(urlPatterns = {"/addToCart/*"})
+@WebServlet(urlPatterns = {"/changeQuantity/*"})
 public class OrderChanger extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // finds item by id in product list
-        // put items into cart
-        // sends out the number of items in cart
+
         String[] pathInfo = request.getPathInfo().split("/");
+        System.out.println(pathInfo[1]);
+        System.out.println(pathInfo[2]);
+        String directionOfChange = pathInfo[1];
+        int productID = Integer.parseInt(pathInfo[2]);
         ProductService productService = ProductServiceHelper.getDataForProduct();
-        int numberOfItemsInCart = 0;
-        try {
-            int productId = Integer.parseInt(pathInfo[1]);
-            Product productPutIntoCart = productService.getProduct(productId);
-            CartDao cartDao = CartDaoMem.getInstance();
-            cartDao.add(productPutIntoCart);
-            for (Product product : productService.getAllProductFromCart()) {
-                numberOfItemsInCart = numberOfItemsInCart + product.quantity;
-            }
-        } catch (NumberFormatException e) {
-            for (Product product : productService.getAllProductFromCart()) {
-                numberOfItemsInCart = numberOfItemsInCart + product.quantity;
+        for (Product product : productService.getAllProductFromCart()) {
+            if (product.getId() == productID && product.quantity > 1 && directionOfChange.equals("-")) {
+                product.quantity = product.quantity - 1;
+                break;
+            } else if (product.getId() == productID && directionOfChange.equals("+")) {
+                product.quantity = product.quantity + 1;
+                break;
             }
         }
+        if (directionOfChange.equals("Delete")) {
+            productService.removeProductFromCart(productID);
+        }
         PrintWriter out = response.getWriter();
-        System.out.println(numberOfItemsInCart);
-        out.print(numberOfItemsInCart);
+        out.print(1);
         out.flush();
     }
 }
