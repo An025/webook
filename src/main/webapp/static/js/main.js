@@ -3,7 +3,7 @@ window.onload = function (){
 }
 
 function init() {
-
+    addToCart();
     let searchButton = document.getElementById("filter")
     searchButton.addEventListener("click", () => {
         check();
@@ -26,8 +26,13 @@ function init() {
             }
 
     function updateCartItemCounter(numberOfItemsInCart){
-        console.log(numberOfItemsInCart);
         document.getElementById('counter-box').innerText = numberOfItemsInCart;
+    }
+
+    function getNumberOfItemsInCart(){
+        fetch("/addToCart/")
+            .then(response=> response.json())
+            .then(numberOfItemsInCart => updateCartItemCounter(numberOfItemsInCart))
     }
 
     function check() {

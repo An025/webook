@@ -34,14 +34,20 @@ public class Shopper extends HttpServlet {
         // put items into cart
         // sends out the number of items in cart
         String[] pathInfo = request.getPathInfo().split("/");
-        int productId = Integer.parseInt(pathInfo[1]);
         ProductService productService = ProductServiceHelper.getDataForProduct();
-        Product productPutIntoCart = productService.getProduct(productId);
-        CartDao cartDao = CartDaoMem.getInstance();
-        cartDao.add(productPutIntoCart);
         int numberOfItemsInCart = 0;
-        for (Product product: productService.getAllProductFromCart()){
-            numberOfItemsInCart = numberOfItemsInCart + product.quantity;
+        try {
+            int productId = Integer.parseInt(pathInfo[1]);
+            Product productPutIntoCart = productService.getProduct(productId);
+            CartDao cartDao = CartDaoMem.getInstance();
+            cartDao.add(productPutIntoCart);
+            for (Product product : productService.getAllProductFromCart()) {
+                numberOfItemsInCart = numberOfItemsInCart + product.quantity;
+            }
+        } catch (NumberFormatException e) {
+            for (Product product : productService.getAllProductFromCart()) {
+                numberOfItemsInCart = numberOfItemsInCart + product.quantity;
+            }
         }
         PrintWriter out = response.getWriter();
         System.out.println(numberOfItemsInCart);
