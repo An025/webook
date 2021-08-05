@@ -149,14 +149,17 @@ function init() {
                 row.appendChild(del);
                 table.appendChild(row);
             }
-            let price = 0;
-            for (let product of Object.entries(productsInCart)) {
-                price += (parseInt(product[1].quantity) * parseInt(product[1].defaultPrice));
-                let orderPrice = document.createElement("p");
-                orderPrice.innerText = "TOTAL PRICE: " + price;
-                cartTableContainer.appendChild(orderPrice);
             }
+        let price = 0;
+        let totalPriceContainer = document.getElementById("total-price");
+        totalPriceContainer.innerText = "";
+        let orderPrice;
+        for (let product of Object.entries(productsInCart)) {
+            price += (parseInt(product[1].quantity) * parseInt(product[1].defaultPrice));
+            orderPrice = document.createElement("p");
+            orderPrice.innerText = "TOTAL PRICE: " + price;
         }
+        totalPriceContainer.appendChild(orderPrice);
     }
 
     function changeQuantity(directionOfChange, productID){
