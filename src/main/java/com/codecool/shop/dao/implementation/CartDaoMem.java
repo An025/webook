@@ -54,7 +54,7 @@ public class CartDaoMem implements CartDao {
 
     @Override
     public void setBillingInfo(BillingInfoMem billingInfoMem) {
-        billingInfoMem = billingInfoMem;
+        this.billingInfoMem = billingInfoMem;
     }
 
         @Override
