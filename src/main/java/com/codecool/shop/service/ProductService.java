@@ -1,23 +1,29 @@
 package com.codecool.shop.service;
 
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.BillingInfoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProductService{
     private ProductDao productDao;
     private ProductCategoryDao productCategoryDao;
     private SupplierDao supplierDao;
+    private CartDao cartDao;
 
-    public ProductService(ProductDao productDao, ProductCategoryDao productCategoryDao, SupplierDao supplierDao) {
+    public ProductService(ProductDao productDao, ProductCategoryDao productCategoryDao, SupplierDao supplierDao, CartDao cartDao) {
         this.productDao = productDao;
         this.productCategoryDao = productCategoryDao;
         this.supplierDao = supplierDao;
+        this.cartDao = cartDao;
     }
 
     public ProductCategory getProductCategory(int categoryId){
@@ -35,9 +41,26 @@ public class ProductService{
         return productDao.getAll();
     }
 
+    public Product getProduct(int id){
+        return productDao.find(id);
+    }
+
     public List<Product> getProductsForCategory(int categoryId){
         var category = productCategoryDao.find(categoryId);
         return productDao.getBy(category);
+
+
+    }
+    public ArrayList<Product> getAllProductFromCart(){
+        return cartDao.getAll();
+    }
+
+    public void removeProductFromCart(int ID){
+        cartDao.remove(ID);
+    }
+
+    public void setAddress(BillingInfoMem billingInfoMem) {
+        cartDao.setBillingInfo(billingInfoMem);
     }
 
 

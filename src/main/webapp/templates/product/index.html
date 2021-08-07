@@ -25,6 +25,8 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
     <script src="/static/js/main.js"></script>
 </head>
@@ -55,9 +57,10 @@
 </nav>
 
 <div class="jumbotron text-center" id="logo">
-    <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/logo.png'" alt="" />
-
-</div>
+    <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/logo.png'" width="200" height="150" alt="" />
+    <a href="/cart"><img class="cartlogo cart" th:attr="src='/static/img/cartLogo.jpg'" width="100" height="100"alt=""/></a>
+    <div id="counter-box" class="cart">0</div>
+    </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
     <a class="navbar-brand" href="#">WeBook</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,85 +68,83 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="category" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Category
-                </a>
-                <div class="dropdown-menu" aria-labelledby="category">
-                    <div class="form-check" id="form-category" th:each="cat : ${categories}">
-                        <div class="input-group">
-                            <input class="dropdown-item form-check-input check-category" type="checkbox" th:value="${cat.name}" value="" id="categoryCheckbox">
-
-                            <label class="dropdown-item form-check-label " for="categoryCheckbox" th:text="${cat.name}">
-                                Default checkbox
-                            </label>
-                        </div>
-                    </div>
-                    <button class="btn btn-outline-success my-2 my-sm-0" id="filter" type="submit">Search</button>
-
-<!--                    <a class="dropdown-item" href="#">Action</a>-->
-<!--                    <a class="dropdown-item" href="#">Another action</a>-->
-<!--                    <div class="dropdown-divider"></div>-->
-<!--                    <a class="dropdown-item" href="#">Something else here</a>-->
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="supplier" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Supplier
-                </a>
-                <div class="dropdown-menu" aria-labelledby="supplier">
-                    <div class="form-check" th:each="supplier : ${suppliers}">
-                        <div class="input-group">
-                            <input class="dropdown-item form-check-input" type="checkbox"  th:value="${supplier.name}" value="" id="supplierCheckbox">
-                            <label class="dropdown-item form-check-label" for="supplierCheckbox" th:text="${supplier.name}">
-                                Default checkbox
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-blue my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
 </nav>
-<div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
-    </div>
-    <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
-            <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+<div class="container-page">
+    <div class="row" id="row">
+        <div class="sidebar container col-3">
+            <div class="card" >
+                <button class="btn btn-outline-blue my-2 my-sm-0" id="filter" type="submit">Search</button>
+                <button class="btn btn-outline-blue my-2 my-sm-0" id="clear-filter" type="submit">Clear filter</button>
+                <article class="filter-group">
+                    <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside1" data-abc="true" aria-expanded="false" class="collapsed"> <i class="icon-control fa fa-chevron-down"></i>
+                        <h6 class="title">Categories </h6>
+                    </a> </header>
+                    <div class="filter-content collapse" id="collapse_aside1" style="">
+                        <div class="form-check" id="form-category" th:each="cat : ${categories}">
+                            <div class="input-group">
+                                <input class="dropdown-item form-check-input check-category" type="checkbox" th:value="${cat.name}" value="" id="categoryCheckbox">
+                                <label class="dropdown-item form-check-label " for="categoryCheckbox" th:text="${cat.name}">
+                                    Default checkbox
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                </article>
+                <article class="filter-group">
+                    <header class="card-header"> <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false" class="collapsed"> <i class="icon-control fa fa-chevron-down"></i>
+                        <h6 class="title">Suppliers </h6>
+                    </a> </header>
+                    <div class="filter-content collapse" id="collapse_aside2" style="">
+                        <div class="card-body">
+                            <div class="form-check" th:each="supplier : ${suppliers}">
+                                <div class="input-group">
+                                    <input class="dropdown-item form-check-input check-supplier" type="checkbox"  th:value="${supplier.name}" value="" id="supplierCheckbox">
+                                    <label class="dropdown-item form-check-label" for="supplierCheckbox" th:text="${supplier.name}">
+                                        Default checkbox
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="container content-container col col-som-12 col-md-9 ">
+            <div class="card">
+                <strong th:text="${category.name}">Category Title</strong>
+            </div>
+            <div id="products" class="row">
+                <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+                    <div class="card">
+                        <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                        <div class="card-header">
+                            <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                            <p class="card-text" th:text="${prod.description}">Product description... </p>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                            </div>
+                            <div class="card-text">
+                                <a th:id="${prod.id}" class="btn btn-success add-to-cart" >Add to cart</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
 </div>
 
 <div th:replace="footer.html :: copy"></div>
 
 <template id="productsTemplate">
     <div class="col col-sm-12 col-md-6 col-lg-4" >
-
         <div class="card">
                 <img class="" src="http://placehold.it/400x250/000/fff"  id="product-img" alt="" />
                 <div class="card-header">
@@ -155,7 +156,7 @@
                         <p class="lead" id="product-price"></p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="btn btn-success add-to-cart" >Add to cart</a>
                     </div>
                 </div>
         </div>
