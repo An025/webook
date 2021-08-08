@@ -5,6 +5,8 @@ window.onload = function (){
 function init() {
     getDataForCart();
     createCheckOutButton();
+    //Set event listener for input event on modal input fields.
+    clearPrevHighlight();
 }
 
 function createCheckOutButton(){
@@ -25,6 +27,31 @@ function createChangeDataButton(){
     checkoutButton.addEventListener("click", getBillingInformation);
 }
 
+function highLightErrors(){
+    let displayedData = document.querySelectorAll("#checkout p");
+    for (let data of displayedData){
+        let idname = data.dataset.type;
+        let userDataInput = document.getElementById(idname);
+        let userText = data.innerText.split(":")[1].trim();
+        if (userText == "error"){
+            userDataInput.style.borderColor = "red";
+            userDataInput.style.background = "#FFCCCC"
+        }
+    }
+}
+
+function clearPrevHighlight(){
+    let userInputs = document.querySelectorAll(".modal-body form input");
+    console.log(userInputs);
+    for (inputField of userInputs){
+        inputField.addEventListener("input", (event)=>{
+            console.log(inputField);
+            event.currentTarget.style.borderColor = "black";
+            event.currentTarget.style.background = "#FFFFFF";
+        })
+    }
+
+}
 
 function getDataForCart() {
     fetch("getItemsInCart")
@@ -48,22 +75,29 @@ function getBillingInformation(){
 function displayBillingInformation(billingInformation){
     let checkoutField = document.getElementById("checkout");
     checkoutField.innerText = "";
-    let header = document.createElement("p")
+    let header = document.createElement("h4")
     header.innerText= "Your billing information: "
     let name = document.createElement("p");
     name.innerText = `Name: ${billingInformation.name}`;
+    name.dataset.type ="name";
     let email = document.createElement("p");
     email.innerText = `Email: ${billingInformation.email}`;
+    email.dataset.type="email";
     let phone = document.createElement("p");
     phone.innerText = `Phone: ${billingInformation.phone}`;
+    phone.dataset.type = "phone";
     let city = document.createElement("p")
     city.innerText= `City : ${billingInformation.city}`;
+    city.dataset.type = "city";
     let country = document.createElement("p");
     country.innerText = `Country: ${billingInformation.country}`;
+    country.dataset.type = "country";
     let zipcode = document.createElement("p");
     zipcode.innerText = `Zipcode: ${billingInformation.zipcode}`;
+    zipcode.dataset.type= "zipcode";
     let address = document.createElement("p");
     address.innerText = `Address: ${billingInformation.address}`;
+    address.dataset.type= "address";
     checkoutField.appendChild(header);
     checkoutField.appendChild(name);
     checkoutField.appendChild(email);
@@ -107,6 +141,7 @@ function sendJSON(city, name, email, phone, country, zipcode, address){
                 proceedToPayment();
                 createChangeDataButton();
             } else {
+                highLightErrors();
                 reject();
             }
         }))
