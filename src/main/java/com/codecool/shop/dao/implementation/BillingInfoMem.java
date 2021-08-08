@@ -46,7 +46,6 @@ public class BillingInfoMem {
             this.email = "error";
             validity = false;
         }
-        System.out.println(validity);
         return validity;
     }
 }
