@@ -70,7 +70,16 @@ function init() {
             body: JSON.stringify(data),
         })
             .then(response => response.json())
-            .then(displayBillingInformation);
+            .then(data => new Promise((resolve,reject)=>
+            {
+                if ("error" in data) {
+                    reject(data.error);
+                } else {
+                    displayBillingInformation(data);
+                    resolve();
+                }
+            }))
+            .catch(console.log(data.error));
     }
 
 
