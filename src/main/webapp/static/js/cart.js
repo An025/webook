@@ -35,7 +35,7 @@ function highLightErrors(){
         let userText = data.innerText.split(":")[1].trim();
         if (userText == "error"){
             userDataInput.style.borderColor = "red";
-            userDataInput.style.background = "#FFCCCC"
+            userDataInput.style.borderWidth = "2px";
         }
     }
 }
@@ -47,7 +47,7 @@ function clearPrevHighlight(){
         inputField.addEventListener("input", (event)=>{
             console.log(inputField);
             event.currentTarget.style.borderColor = "black";
-            event.currentTarget.style.background = "#FFFFFF";
+            event.currentTarget.style.borderWidth = "1px";
         })
     }
 
