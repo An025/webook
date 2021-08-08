@@ -37,6 +37,7 @@ public class BillingInfo extends HttpServlet {
             Gson gson = new Gson();
             BillingInfoMem billingInfo = gson.fromJson(jb.toString(), BillingInfoMem.class);
             productService.setAddress(billingInfo);
+            billingInfo.isValid();
             String convertedObject = gson.toJson(billingInfo);
             PrintWriter out = response.getWriter();
             response.setContentType("application/json");
