@@ -18,19 +18,19 @@ public class BillingInfoMem {
     public boolean isValid(){
         this.phone = this.phone.replaceAll("[- ()]*","");
         boolean validity = true;
-        if (! this.name.matches("[a-zA-Z]+")){
+        if (! this.name.matches("[a-zA-Z ]+")){
             this.name = "error";
             validity = false;
         }
-        if (! this.city.matches("[a-zA-Z]+")){
+        if (! this.city.matches("[a-zA-Z ]+")){
             this.city = "error";
             validity = false;
         }
-        if (! this.country.matches("[a-zA-Z]+")){
+        if (! this.country.matches("[a-zA-Z ]+")){
             this.country = "error";
             validity = false;
         }
-        if (! this.address.matches("[a-zA-Z0-9]+")){
+        if (! this.address.matches("[a-zA-Z0-9 .-/,]+")){
             this.address = "error";
             validity = false;
         }
@@ -42,7 +42,7 @@ public class BillingInfoMem {
             this.zipcode = "error";
             validity = false;
         }
-        if (! this.email.matches("[a-zA-Z]+@[a-zA-Z]+\\.(com|hu)")){
+        if (! this.email.matches("[a-zA-Z._]+@[a-zA-Z]+\\.(com|hu)")){
             this.email = "error";
             validity = false;
         }
