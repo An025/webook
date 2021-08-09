@@ -61,7 +61,11 @@ public class CartDaoMem implements CartDao {
         public ArrayList<Product> getAll () {
             return data;
         }
+
+    public BillingInfoMem getBillingInfoMem() {
+        return billingInfoMem;
     }
+}
 
 
 
