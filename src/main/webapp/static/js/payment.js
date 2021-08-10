@@ -5,7 +5,7 @@ window.onload = function (){
 function init() {
     console.log("Hello from payment js.");
     getTotalPrice();
-    setPayment();
+    handlePayment();
 }
 
 function getTotalPrice() {
@@ -28,40 +28,71 @@ function displayTotalPrice(products){
     totalPriceDiv.appendChild(totalPriceTag);
 }
 
-function setPayment(){
+function handlePayment(){
     let btnPayment = document.querySelector("#payment-button");
-    btnPayment.addEventListener("click", () =>setModalContent())
+    btnPayment.addEventListener("click", () =>setModalContent()
+                                                            .then((paymentMethod) => sendPaymentInfo(paymentMethod))
+                                                            .catch((message)=>console.log(message)));
 }
 
 function setModalContent(){
-    let paymentMethod = getPaymentOption();
-    let paymentForm = document.querySelector("#payment-details");
-    //Clear prev inserted content
-    while(paymentForm.firstElementChild){paymentForm.removeChild(paymentForm.firstElementChild)};
-    let paymentDetailDiv = document.createElement("div");
-    let savechangesbtn = document.querySelector("#save-changes");
-    //It can be hidden if no payment method was chosen, so it needs a reset.
-    savechangesbtn.style.display = "display";
-    let content = "";
-    switch (paymentMethod){
-        case "none":
-            let message = document.createElement("p");
-            message.innerText = "Please choose payment method first.";
-            paymentForm.appendChild(message);
-            savechangesbtn.style.display="none";
-            break;
-        case "paypal":
-            content = createPayPalMethodDetails();
-            paymentDetailDiv.innerHTML = content;
-            paymentForm.appendChild(paymentDetailDiv);
-            break;
-        case "card":
-            content = createCreditCardMethodDetails();
-            paymentDetailDiv.innerHTML = content;
-            paymentForm.appendChild(paymentDetailDiv);
-            break;
+    return new Promise((resolve,reject) => {
+        let paymentMethod = getPaymentOption();
+        let paymentForm = document.querySelector("#payment-details");
+        //Clear prev inserted content
+        while (paymentForm.firstElementChild) {
+            paymentForm.removeChild(paymentForm.firstElementChild)
+        }
+        let paymentDetailDiv = document.createElement("div");
+        let savechangesbtn = document.querySelector("#save-changes");
+        //It can be hidden if no payment method was chosen, so it needs a reset.
+        savechangesbtn.style.display = "display";
+        let content = "";
+        switch (paymentMethod) {
+            case "none":
+                let message = document.createElement("p");
+                message.innerText = "Please choose payment method first.";
+                paymentForm.appendChild(message);
+                savechangesbtn.style.display = "none";
+                reject("No payment method was chosen.");
+                break;
+            case "paypal":
+                content = createPayPalMethodDetails();
+                paymentDetailDiv.innerHTML = content;
+                paymentForm.appendChild(paymentDetailDiv);
+                break;
+            case "card":
+                content = createCreditCardMethodDetails();
+                paymentDetailDiv.innerHTML = content;
+                paymentForm.appendChild(paymentDetailDiv);
+                break;
+        }
+        resolve(paymentMethod);
     }
+)}
+
+function sendPaymentInfo(paymentMethod){
+    let data = {"isPayPal": false, "email": "", "password": "", "cardNo": "", "name": "", "expDate": "", "cvcCode": ""};
+    let modalFormInputs = document.querySelectorAll("#payment-details input");
+    let savechangesbtn = document.querySelector("#save-changes");
+    if (paymentMethod == "paypal"){
+        data.isPayPal = true;
+        data.email = modalFormInputs[0].value;
+        data.password = modalFormInputs[1].value;
+    } else if (paymentMethod == "card"){
+        data.isPayPal = false;
+        data.cardNo = modalFormInputs[0].value;
+        data.name = modalFormInputs[1].value;
+        data.expDate = `${modalFormInputs[2].value}/${modalFormInputs[3].value}`;
+        data.cvcCode = modalFormInputs[4].value;
+    }
+    //Prev listener needs to be removed, so onclick is used instead of addEventListener
+    savechangesbtn.onclick = function (){
+        sendJSON(data)
+    };
+
 }
+
 
 function getPaymentOption(){
     let paymentFormInputs = document.querySelectorAll("#payment-method-form input");
@@ -98,6 +129,23 @@ function createCreditCardMethodDetails(){
 
 }
 
+function sendJSON(data){
+
+    fetch('/payment/', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(data => new Promise((resolve,reject)=>
+        {
+            console.log(data);
+
+        }))
+
+}
 
 function confirmPayment(){
     let checkoutField = document.getElementById("priceContainer");
