@@ -72,25 +72,41 @@ function setModalContent(){
 )}
 
 function sendPaymentInfo(paymentMethod){
-    let data = {"isPayPal": false, "email": "", "password": "", "cardNo": "", "name": "", "expDate": "", "cvcCode": ""};
-    let modalFormInputs = document.querySelectorAll("#payment-details input");
+    //Prev listener needs to be removed, so onclick is used instead of addEventListener
     let savechangesbtn = document.querySelector("#save-changes");
-    if (paymentMethod == "paypal"){
+    savechangesbtn.onclick = function (){
+        readInputValues(paymentMethod)
+            .then((data) => sendJSON(data));
+
+    };
+
+}
+
+function readInputValues(paymentMethod){
+    return new Promise((resolve) => {
+        let data = {
+            "isPayPal": false,
+            "email": "",
+            "password": "",
+            "cardNo": "",
+            "name": "",
+            "expDate": "",
+            "cvcCode": ""
+        };
+        let modalFormInputs = document.querySelectorAll("#payment-details input");
+        if (paymentMethod == "paypal") {
         data.isPayPal = true;
         data.email = modalFormInputs[0].value;
         data.password = modalFormInputs[1].value;
-    } else if (paymentMethod == "card"){
+        } else if (paymentMethod == "card") {
         data.isPayPal = false;
         data.cardNo = modalFormInputs[0].value;
         data.name = modalFormInputs[1].value;
         data.expDate = `${modalFormInputs[2].value}/${modalFormInputs[3].value}`;
         data.cvcCode = modalFormInputs[4].value;
     }
-    //Prev listener needs to be removed, so onclick is used instead of addEventListener
-    savechangesbtn.onclick = function (){
-        sendJSON(data)
-    };
-
+        resolve(data);
+    })
 }
 
 
