@@ -44,11 +44,11 @@
 <div style="margin: 10px" id="total-price"></div>
 
 <div id="payment" style="margin: 10px">
-    <form>
+    <form id="payment-method-form">
         <label for="card">Credit card</label>
-        <input id="card" type="radio" name="payment-method"><br>
+        <input id="card" type="radio" name="payment-method" value="card"><br>
         <label for="paypal">PayPal</label>
-        <input id="paypal" type="radio" name="payment-method"><br>
+        <input id="paypal" type="radio" name="payment-method" value="paypal"><br>
         <button id= "payment-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">
             Payment
         </button>
@@ -66,11 +66,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="payment">
-                    <label for="email">Email</label><br>
-                    <input type="text" id="email" name="lname" value="mockaddress@mockingJay.com" placeholder="mockaddress@mockingJay.com"><br>
-                    <label for="password">Password</label><br>
-                    <input type="password" id="password" name="lname" value="notToKnow" placeholder="notToKnow"><br>
+                <form id="payment-details">
+
                 </form>
             </div>
             <div class="modal-footer">

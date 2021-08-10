@@ -4,7 +4,8 @@ window.onload = function (){
 
 function init() {
     console.log("Hello from payment js.");
-    getTotalPrice()
+    getTotalPrice();
+    setPayment();
 }
 
 function getTotalPrice() {
@@ -26,6 +27,77 @@ function displayTotalPrice(products){
     totalPriceTag.innerText = `Total price: ${totalprice} USD`;
     totalPriceDiv.appendChild(totalPriceTag);
 }
+
+function setPayment(){
+    let btnPayment = document.querySelector("#payment-button");
+    btnPayment.addEventListener("click", () =>setModalContent())
+}
+
+function setModalContent(){
+    let paymentMethod = getPaymentOption();
+    let paymentForm = document.querySelector("#payment-details");
+    //Clear prev inserted content
+    while(paymentForm.firstElementChild){paymentForm.removeChild(paymentForm.firstElementChild)};
+    let paymentDetailDiv = document.createElement("div");
+    let savechangesbtn = document.querySelector("#save-changes");
+    //It can be hidden if no payment method was chosen, so it needs a reset.
+    savechangesbtn.style.display = "display";
+    let content = "";
+    switch (paymentMethod){
+        case "none":
+            let message = document.createElement("p");
+            message.innerText = "Please choose payment method first.";
+            paymentForm.appendChild(message);
+            savechangesbtn.style.display="none";
+            break;
+        case "paypal":
+            content = createPayPalMethodDetails();
+            paymentDetailDiv.innerHTML = content;
+            paymentForm.appendChild(paymentDetailDiv);
+            break;
+        case "card":
+            content = createCreditCardMethodDetails();
+            paymentDetailDiv.innerHTML = content;
+            paymentForm.appendChild(paymentDetailDiv);
+            break;
+    }
+}
+
+function getPaymentOption(){
+    let paymentFormInputs = document.querySelectorAll("#payment-method-form input");
+    let paymentMethod = "none"; //Will be overridden if payment method is checked
+    for (inputelement of paymentFormInputs){
+        if (inputelement.checked){
+            paymentMethod = inputelement.value;
+        }
+    }
+    return paymentMethod;
+}
+
+
+function createPayPalMethodDetails(){
+    let content = '<label for=\"email\">Email</label><br>' +
+        '<input type=\"text\" id=\"email\" name=\"lname\" value=\"mockaddress@mockingJay.com\" placeholder=\"mockaddress@mockingJay.com\" style=\"min-width: 80%\"><br>'+
+        '<label for=\"password\">Password</label><br>' +
+        '<input type=\"password\" id=\"password\" name=\"lname\" value=\"notToKnow\" placeholder=\"notToKnow\" style=\"min-width: 80%\"><br>'
+    return content;
+}
+
+function createCreditCardMethodDetails(){
+    let content = '<label for=\"number\">Card number</label><br>' +
+        '<input type=\"text\" id=\"number\" name=\"lname\" value=\"1234567812345678\" placeholder=\"1234567812345678\"><br>'+
+        '<label for=\"holder\">Name on card</label><br>' +
+        '<input type=\"text\" id=\"holder\" name=\"lname\" value=\"John Doe\" placeholder=\"John Doe\" style=\"min-width: 70%\"><br><br>' +
+        '<label for=\"expiry-month\" style=\"margin-right: 5px\">Expiry: </label>' +
+        '<input type=\"text\" id=\"expiry-month\" name=\"lname\" value=\"01\" placeholder=\"01\" style=\"max-width: 30px\">' +
+        '<label for=\"expiry-year\" style=\"margin-left: 5px; margin-right: 5px\"> / </label>' +
+        '<input type=\"text\" id=\"expiry-year\" name=\"lname\" value=\"22\" placeholder=\"22\" style=\"max-width: 30px\"><br>' +
+        '<label for=\"cvc-code\"> CVC code: </label><br>' +
+        '<input type=\"password\" id=\"cvc-code\" name=\"lname\" value=\"123\" placeholder=\"123\" style=\"width: 40px; text-align: center\"><br>';
+    return content;
+
+}
+
 
 function confirmPayment(){
     let checkoutField = document.getElementById("priceContainer");
