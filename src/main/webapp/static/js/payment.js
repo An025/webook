@@ -95,16 +95,16 @@ function readInputValues(paymentMethod){
         };
         let modalFormInputs = document.querySelectorAll("#payment-details input");
         if (paymentMethod == "paypal") {
-        data.isPayPal = true;
-        data.email = modalFormInputs[0].value;
-        data.password = modalFormInputs[1].value;
+            data.isPayPal = true;
+            data.email = modalFormInputs[0].value;
+            data.password = modalFormInputs[1].value;
         } else if (paymentMethod == "card") {
-        data.isPayPal = false;
-        data.cardNo = modalFormInputs[0].value;
-        data.name = modalFormInputs[1].value;
-        data.expDate = `${modalFormInputs[2].value}/${modalFormInputs[3].value}`;
-        data.cvcCode = modalFormInputs[4].value;
-    }
+            data.isPayPal = false;
+            data.cardNo = modalFormInputs[0].value;
+            data.name = modalFormInputs[1].value;
+            data.expDate = `${modalFormInputs[2].value}/${modalFormInputs[3].value}`;
+            data.cvcCode = modalFormInputs[4].value;
+        }
         resolve(data);
     })
 }
@@ -155,11 +155,30 @@ function sendJSON(data){
         body: JSON.stringify(data),
     })
         .then(response => response.json())
-        .then(data => new Promise((resolve,reject)=>
+        .then(newdata => new Promise((resolve,reject)=>
         {
-            console.log(data);
+            console.log(newdata);
+            displayPaymentDetails(newdata);
 
         }))
+
+}
+
+
+function displayPaymentDetails(data){
+    let content = "";
+    let detailsContainer = document.getElementById("payment-input-details");
+    if (data.isPayPal) {
+        content = `
+        <p>Payment method: Paypal</p>
+        <p>Account: ${data.email}</p>`;
+    } else {
+        content = `
+        <p>Payment method: credit card</p>
+        <p>Name on card: ${data.name}</p>
+        <p>Card number: ${data.cardNo}</p>`
+    }
+    detailsContainer.innerHTML = content;
 
 }
 
