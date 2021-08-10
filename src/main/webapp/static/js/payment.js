@@ -3,22 +3,28 @@ window.onload = function (){
 }
 
 function init() {
-    console.log("Hello from payment js.")
+    console.log("Hello from payment js.");
+    getTotalPrice()
 }
 
 function getTotalPrice() {
-    fetch("getTotalPrice")
-        .then(response => response.json())
-        .then((priceData)=>displayTotalPrice(priceData.price));
+        fetch("getItemsInCart")
+            .then(response => response.json())
+            .then(data =>{
+                console.log(data);
+                displayTotalPrice(data)
+            });
 }
 
-function displayTotalPrice(price){
-    let priceField = document.getElementById("priceContainer");
-    let header = document.createElement("h4")
-    header.innerText= "Total price: "
-    let priceTag = document.createElement("p");
-    name.innerText = `${price}`;
-    priceField.appendChild(priceTag);
+function displayTotalPrice(products){
+    let totalprice = 0;
+    let totalPriceDiv = document.querySelector("#total-price");
+    let totalPriceTag = document.createElement("span");
+    for (product of products){
+        totalprice += product.defaultPrice * product.quantity;
+    }
+    totalPriceTag.innerText = `Total price: ${totalprice} USD`;
+    totalPriceDiv.appendChild(totalPriceTag);
 }
 
 function confirmPayment(){
