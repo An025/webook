@@ -46,7 +46,7 @@
   <div class="row" id="row">
     <div class="container content-container col col-som-12 col-md-9 ">
       <h3><span th:text="${billingInfo.getName()}"></span><span> orders: </span></h3>
-<!--      <h5>Order ID:<span th:text="${order.getId()}">ID...</span></h5>-->
+      <h5>Order ID:<span th:text="${orderID}">ID...</span></h5>
 <!--      <h5>Payment: <span th:text="${order.getOrderType()}"></span></h5>-->
       <div class="billing-info" >
         <h3>Billing Information</h3>
@@ -102,7 +102,7 @@
             <th>---------------------</th>
           </tr>
         </table>
-        <h5>Total Price: <span></span><span>USD</span></h5>
+        <h5>Total Price: <span th:text="${totalprice}"></span><span> USD</span></h5>
       </div>
     </div>
   </div>

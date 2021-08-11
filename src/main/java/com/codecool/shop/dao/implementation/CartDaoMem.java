@@ -7,10 +7,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CartDaoMem implements CartDao {
@@ -20,7 +17,7 @@ public class CartDaoMem implements CartDao {
     private BillingInfoMem billingInfoMem;
     private float totalPrice;
     private PaymentDetailMem paymentDetail;
-
+    private UUID orderID;
     /* A private Constructor prevents any other class from instantiating.
      */
     private CartDaoMem() {
@@ -58,6 +55,13 @@ public class CartDaoMem implements CartDao {
         this.billingInfoMem = billingInfoMem;
     }
 
+    public void setOrderID(UUID orderID) {
+        this.orderID = orderID;
+    }
+
+    public UUID getOrderID() {
+        return orderID;
+    }
 
     public void setPaymentDetail(PaymentDetailMem paymentDetail){
         this.paymentDetail = paymentDetail;
