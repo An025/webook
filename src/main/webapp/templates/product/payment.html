@@ -41,22 +41,26 @@
     <a href="/cart">Back to cart</a>
 </nav>
 
-<div style="margin: 10px" id="total-price"></div>
+<div id="wrapper" style="display: flex; align-content: center; justify-content: center">
+<div id="container" style="text-align: left; width: 500px" >
+    <div style="margin: 10px" id="total-price"></div>
 
-<div id="payment" style="margin: 10px">
-    <form id="payment-method-form">
-        <label for="card">Credit card</label>
-        <input id="card" type="radio" name="payment-method" value="card"><br>
-        <label for="paypal">PayPal</label>
-        <input id="paypal" type="radio" name="payment-method" value="paypal"><br>
-        <button id= "payment-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">
-            Payment
-        </button>
-    </form>
-    <div id="confirmation"></div>
-    <div style="margin-top: 10px" id="payment-input-details">
+    <div id="payment" style="margin: 10px">
+        <form id="payment-method-form">
+            <label for="card">Credit card</label>
+            <input id="card" type="radio" name="payment-method" value="card"><br>
+            <label for="paypal">PayPal</label>
+            <input id="paypal" type="radio" name="payment-method" value="paypal"><br>
+            <button id= "payment-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">
+                Payment
+            </button>
+        </form>
+        <div id="confirmation"></div>
+        <div style="margin-top: 10px" id="payment-input-details">
 
+        </div>
     </div>
+</div>
 </div>
 
 <!-- Modal -->
