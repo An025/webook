@@ -67,7 +67,11 @@ public class CartDaoMem implements CartDao {
         this.paymentDetail = paymentDetail;
     }
 
-        @Override
+    public PaymentDetailMem getPaymentDetail() {
+        return paymentDetail;
+    }
+
+    @Override
         public ArrayList<Product> getAll () {
             return data;
         }
