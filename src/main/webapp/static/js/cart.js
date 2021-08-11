@@ -45,7 +45,6 @@ function clearPrevHighlight(){
     console.log(userInputs);
     for (inputField of userInputs){
         inputField.addEventListener("input", (event)=>{
-            console.log(inputField);
             event.currentTarget.style.borderColor = "black";
             event.currentTarget.style.borderWidth = "1px";
         })
@@ -112,6 +111,9 @@ function proceedToPayment(){
     let checkoutField = document.getElementById("checkout");
     let proceedToPayment = document.createElement("button")
     proceedToPayment.type = "button";
+    proceedToPayment.addEventListener("click", ()=>{
+        window.location = "/payment";
+    })
     proceedToPayment.innerText = "Proceed to payment";
     proceedToPayment.className = "btn btn-primary"
     checkoutField.appendChild(proceedToPayment);

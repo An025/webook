@@ -19,6 +19,7 @@ public class CartDaoMem implements CartDao {
     private static CartDaoMem instance = null;
     private BillingInfoMem billingInfoMem;
     private float totalPrice;
+    private PaymentDetailMem paymentDetail;
 
     /* A private Constructor prevents any other class from instantiating.
      */
@@ -57,11 +58,20 @@ public class CartDaoMem implements CartDao {
         this.billingInfoMem = billingInfoMem;
     }
 
+
+    public void setPaymentDetail(PaymentDetailMem paymentDetail){
+        this.paymentDetail = paymentDetail;
+    }
+
         @Override
         public ArrayList<Product> getAll () {
             return data;
         }
+
+    public BillingInfoMem getBillingInfoMem() {
+        return billingInfoMem;
     }
+}
 
 
 

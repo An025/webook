@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.implementation.BillingInfoMem;
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.service.ProductServiceHelper;
 import com.google.gson.Gson;
@@ -37,7 +38,13 @@ public class BillingInfo extends HttpServlet {
             Gson gson = new Gson();
             BillingInfoMem billingInfo = gson.fromJson(jb.toString(), BillingInfoMem.class);
             productService.setAddress(billingInfo);
-            billingInfo.isValid();
+            boolean billingValidity = billingInfo.isValid();
+            if (billingValidity){
+                CartDaoMem.getInstance().setBillingInfo(billingInfo);
+            } else {
+                BillingInfoMem falseMemory = null;
+                CartDaoMem.getInstance().setBillingInfo(falseMemory);
+            }
             String convertedObject = gson.toJson(billingInfo);
             PrintWriter out = response.getWriter();
             response.setContentType("application/json");
