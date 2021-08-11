@@ -177,6 +177,7 @@ function sendJSON(data){
                 resolve();
                 displayPaymentDetails(newdata);
                 closeModalWindow();
+                changeOrigTextForPaymentButton();
                 showConfirmPaymentButton();
             } else {
                 highLightErrors(newdata);
@@ -232,6 +233,10 @@ function closeModalWindow(){
     closeButton.click();
 }
 
+function changeOrigTextForPaymentButton(){
+    let btnPayment = document.querySelector("#payment-button");
+    btnPayment.innerText = "Change payment details";
+}
 
 function showConfirmPaymentButton(){
     let confirmationField = document.getElementById("confirmation");
