@@ -134,23 +134,23 @@ function getPaymentOption(){
 
 function createPayPalMethodDetails(){
     let content = '<label for=\"email\">Email</label><br>' +
-        '<input type=\"text\" id=\"email\" name=\"lname\" value=\"mockaddress@mockingJay.com\" placeholder=\"mockaddress@mockingJay.com\" style=\"min-width: 80%\"><br>'+
+        '<input type=\"text\" id=\"email\" data-type=\"email\" name=\"lname\" value=\"mockaddress@mockingJay.com\" placeholder=\"mockaddress@mockingJay.com\" style=\"min-width: 80%\"><br>'+
         '<label for=\"password\">Password</label><br>' +
-        '<input type=\"password\" id=\"password\" name=\"lname\" value=\"notToKnow\" placeholder=\"notToKnow\" style=\"min-width: 80%\"><br>'
+        '<input type=\"password\" id=\"password\" data-type=\"password\" name=\"lname\" value=\"notToKnow\" placeholder=\"notToKnow\" style=\"min-width: 80%\"><br>'
     return content;
 }
 
 function createCreditCardMethodDetails(){
     let content = '<label for=\"number\">Card number</label><br>' +
-        '<input type=\"text\" id=\"number\" name=\"lname\" value=\"1234567812345678\" placeholder=\"1234567812345678\"><br>'+
+        '<input type=\"text\" id=\"number\" data-type=\"cardNo\" name=\"lname\" value=\"1234567812345678\" placeholder=\"1234567812345678\"><br>'+
         '<label for=\"holder\">Name on card</label><br>' +
-        '<input type=\"text\" id=\"holder\" name=\"lname\" value=\"John Doe\" placeholder=\"John Doe\" style=\"min-width: 70%\"><br><br>' +
+        '<input type=\"text\" id=\"holder\" data-type=\"name\" name=\"lname\" value=\"John Doe\" placeholder=\"John Doe\" style=\"min-width: 70%\"><br><br>' +
         '<label for=\"expiry-month\" style=\"margin-right: 5px\">Expiry: </label>' +
-        '<input type=\"text\" id=\"expiry-month\" name=\"lname\" value=\"01\" placeholder=\"01\" style=\"max-width: 30px\">' +
+        '<input type=\"text\" id=\"expiry-month\" data-type=\"expDate\" name=\"lname\" value=\"01\" placeholder=\"01\" style=\"max-width: 30px\">' +
         '<label for=\"expiry-year\" style=\"margin-left: 5px; margin-right: 5px\"> / </label>' +
-        '<input type=\"text\" id=\"expiry-year\" name=\"lname\" value=\"22\" placeholder=\"22\" style=\"max-width: 30px\"><br>' +
+        '<input type=\"text\" id=\"expiry-year\" data-type=\"expDate\" name=\"lname\" value=\"22\" placeholder=\"22\" style=\"max-width: 30px\"><br>' +
         '<label for=\"cvc-code\"> CVC code: </label><br>' +
-        '<input type=\"password\" id=\"cvc-code\" name=\"lname\" value=\"123\" placeholder=\"123\" style=\"width: 40px; text-align: center\"><br>';
+        '<input type=\"password\" id=\"cvc-code\" data-type=\"cvcCode\" name=\"lname\" value=\"123\" placeholder=\"123\" style=\"width: 40px; text-align: center\"><br>';
     return content;
 
 }
@@ -167,10 +167,8 @@ function sendJSON(data){
         .then(response => response.json())
         .then(newdata => new Promise((resolve,reject)=>
         {
-            console.log(newdata);
             let validity = true;
             for (key in newdata) {
-                console.log(newdata[key]);
                 if (newdata[key] == "error"){
                     validity = false;
                 }
@@ -178,8 +176,10 @@ function sendJSON(data){
             if (validity) {
                 resolve();
                 displayPaymentDetails(newdata);
-                confirmPayment();
+                closeModalWindow();
+                showConfirmPaymentButton();
             } else {
+                highLightErrors(newdata);
                 reject("Error in payment details.");
             }
 
@@ -206,7 +206,34 @@ function displayPaymentDetails(data){
 
 }
 
-function confirmPayment(){
+function highLightErrors(data){
+    for (key in data){
+        if (data[key] == "error"){
+            //As for expDate 2 input fields share the same data-type
+            let invalidInputs = document.querySelectorAll(`input[data-type=${key}]`);
+            for (input of invalidInputs) {
+                input.style.borderColor = "red";
+                input.style.borderWidth = "2p";
+                //Removes prev highlight if correction initiated
+                input.addEventListener("input", ()=>{
+                    //Again, due to that 2 inputs have expDate data-type
+                    for (input of invalidInputs) {
+                        input.style.borderColor = "black";
+                        input.style.borderWidth = "1px";
+                    }
+                })
+            }
+        }
+    }
+}
+
+function closeModalWindow(){
+    let closeButton = document.querySelector("button[data-dismiss='modal']");
+    closeButton.click();
+}
+
+
+function showConfirmPaymentButton(){
     let confirmationField = document.getElementById("confirmation");
     let makePayment = document.createElement("button")
     makePayment.type = "button";
