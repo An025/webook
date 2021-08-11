@@ -32,16 +32,16 @@ public class PaymentInfo extends HttpServlet{
         }
         Gson gson = new Gson();
         PaymentDetailMem paymentInfo = gson.fromJson(jb.toString(), PaymentDetailMem.class);
-        CartDaoMem.getInstance().setPaymentDetail(paymentInfo);
-        /**
+
         boolean paymentValidity = paymentInfo.isValid();
+
         if (paymentValidity){
             CartDaoMem.getInstance().setPaymentDetail(paymentInfo);
         } else {
             PaymentDetailMem falseMemory = null;
-            CartDaoMem.getInstance().setPaymentDetail(paymentInfo);
+            CartDaoMem.getInstance().setPaymentDetail(falseMemory);
         }
-        **/
+
         String convertedObject = gson.toJson(paymentInfo);
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");

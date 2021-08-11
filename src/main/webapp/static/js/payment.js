@@ -30,9 +30,18 @@ function displayTotalPrice(products){
 
 function handlePayment(){
     let btnPayment = document.querySelector("#payment-button");
-    btnPayment.addEventListener("click", () =>setModalContent()
+    btnPayment.addEventListener("click", () => {removePrevConfirmationButton();
+                                                            setModalContent()
                                                             .then((paymentMethod) => sendPaymentInfo(paymentMethod))
-                                                            .catch((message)=>console.log(message)));
+                                                            .catch((message)=>console.log(message))});
+}
+
+function removePrevConfirmationButton(){
+    //Clear prev inserted Confirmation button for assessing new input first
+    let confirmation = document.getElementById("confirmation");
+    while(confirmation.firstElementChild){
+        confirmation.removeChild(confirmation.firstElementChild)
+    }
 }
 
 function setModalContent(){
@@ -42,11 +51,6 @@ function setModalContent(){
         //Clear prev inserted content
         while (paymentForm.firstElementChild) {
             paymentForm.removeChild(paymentForm.firstElementChild)
-        }
-        //Clear prev inserted Confirmation button for assessing new input first
-        let confirmation = document.getElementById("confirmation");
-        while(confirmation.firstElementChild){
-            confirmation.removeChild(confirmation.firstElementChild)
         }
         let paymentDetailDiv = document.createElement("div");
         let savechangesbtn = document.querySelector("#save-changes");
@@ -80,6 +84,7 @@ function sendPaymentInfo(paymentMethod){
     //Prev listener needs to be removed, so onclick is used instead of addEventListener
     let savechangesbtn = document.querySelector("#save-changes");
     savechangesbtn.onclick = function (){
+        removePrevConfirmationButton();
         readInputValues(paymentMethod)
             .then((data) => sendJSON(data));
 
@@ -163,10 +168,23 @@ function sendJSON(data){
         .then(newdata => new Promise((resolve,reject)=>
         {
             console.log(newdata);
-            displayPaymentDetails(newdata);
-            confirmPayment();
+            let validity = true;
+            for (key in newdata) {
+                console.log(newdata[key]);
+                if (newdata[key] == "error"){
+                    validity = false;
+                }
+            }
+            if (validity) {
+                resolve();
+                displayPaymentDetails(newdata);
+                confirmPayment();
+            } else {
+                reject("Error in payment details.");
+            }
 
         }))
+        .catch((message)=>console.log(message));
 
 }
 
