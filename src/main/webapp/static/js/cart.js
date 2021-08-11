@@ -3,6 +3,7 @@ window.onload = function (){
 }
 
 function init() {
+    logoImgClick();
     getDataForCart();
     createCheckOutButton();
     //Set event listener for input event on modal input fields.
@@ -248,4 +249,7 @@ function changeQuantity(directionOfChange, productID){
             .then(getDataForCart);
     }
 
-
+function logoImgClick(){
+    let logoImg = document.querySelector("#logoImg");
+    logoImg.addEventListener("click", () => window.location = "/");
+}
