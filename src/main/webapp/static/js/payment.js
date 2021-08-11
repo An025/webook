@@ -43,6 +43,11 @@ function setModalContent(){
         while (paymentForm.firstElementChild) {
             paymentForm.removeChild(paymentForm.firstElementChild)
         }
+        //Clear prev inserted Confirmation button for assessing new input first
+        let confirmation = document.getElementById("confirmation");
+        while(confirmation.firstElementChild){
+            confirmation.removeChild(confirmation.firstElementChild)
+        }
         let paymentDetailDiv = document.createElement("div");
         let savechangesbtn = document.querySelector("#save-changes");
         //It can be hidden if no payment method was chosen, so it needs a reset.
@@ -159,6 +164,7 @@ function sendJSON(data){
         {
             console.log(newdata);
             displayPaymentDetails(newdata);
+            confirmPayment();
 
         }))
 
@@ -183,15 +189,16 @@ function displayPaymentDetails(data){
 }
 
 function confirmPayment(){
-    let checkoutField = document.getElementById("priceContainer");
+    let confirmationField = document.getElementById("confirmation");
     let makePayment = document.createElement("button")
     makePayment.type = "button";
     makePayment.addEventListener("click", ()=>{
-        window.location = "/confirmation";
+        //window.location = "/confirmation";
     })
-    makePayment.innerText = "Proceed to payment";
-    makePayment.className = "btn btn-primary"
-    checkoutField.appendChild(makePayment);
+    makePayment.innerText = "Confirm payment";
+    makePayment.className = "btn btn-danger";
+    makePayment.style.marginTop = "10px";
+    confirmationField.appendChild(makePayment);
 }
 
 
