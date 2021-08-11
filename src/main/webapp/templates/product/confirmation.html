@@ -27,13 +27,13 @@
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
-  <script src="/static/js/main.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+  <script src="/static/js/confirmation.js"></script>
 </head>
 
 <body>
 <div class="jumbotron text-center" id="logo">
-  <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/logo.png'" width="200" height="150" alt="" />
+  <img id="logoImg" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/logo.png'" width="200" height="150" alt="" />
 </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
   <a class="navbar-brand" href="#">WeBook Confirmation Page</a>
@@ -45,64 +45,74 @@
 <div class="container-page">
   <div class="row" id="row">
     <div class="container content-container col col-som-12 col-md-9 ">
-      <h3><span th:text="${billingInfo.getName()}"></span><span> orders: </span></h3>
-      <h5>Order ID:<span th:text="${orderID}">ID...</span></h5>
-<!--      <h5>Payment: <span th:text="${order.getOrderType()}"></span></h5>-->
-      <div class="billing-info" >
-        <h3>Billing Information</h3>
-        <table>
-          <tr>
-            <th>Name:</th>
-            <td th:text="${billingInfo.getName()}"></td>
-          </tr>
-          <tr>
-            <th>Country:</th>
-            <td th:text="${billingInfo.getCountry()}"></td>
-          </tr>
-          <tr>
-            <th>City:</th>
-            <td th:text="${billingInfo.getCity()}"></td>
-          </tr>
-          <tr>
-            <th>Address:</th>
-            <td th:text="${billingInfo.getAddress()}"></td>
-          </tr>
-          <tr>
-            <th>Zipcode:</th>
-            <td th:text="${billingInfo.getZipcode()}"></td>
-          </tr>
-          <tr>
-            <th>Email:</th>
-            <td th:text="${billingInfo.getEmail()}"></td>
-          </tr>
-          <tr>
-            <th>Phone:</th>
-            <td th:text="${billingInfo.getPhone()}"></td>
-          </tr>
-        </table>
-      </div>
 
-      <div>
-        <h3>Order Information</h3>
-        <table th:each="item: ${productsList}">
-          <tr>
-            <th>Book Name:</th>
-            <td th:text="${item.getName()}"></td>
-          </tr>
-          <tr>
-            <th>Book Price:</th>
-            <td th:text="${item.getPrice()}"></td>
-          </tr>
-          <tr>
-            <th>Book Quentity :</th>
-            <td th:text="${item.getQuantity()}"></td>
-          </tr>
-          <tr>
-            <th>---------------------</th>
-            <th>---------------------</th>
-          </tr>
-        </table>
-        <h5>Total Price: <span th:text="${totalprice}"></span><span> USD</span></h5>
+      <div th:if="${paymentStatus}">
+        <h2 class="text-center">Thanks for shopping.</h2>
+        <h5 class="text-success">Payment: PAID</h5>
+        <p>Order ID:<span th:text="${orderID}">ID...</span></p>
+        <div class="billing-info" >
+          <h3>Billing Information</h3>
+          <table>
+            <tr>
+              <th>Name:</th>
+              <td th:text="${billingInfo.getName()}"></td>
+            </tr>
+            <tr>
+              <th>Country:</th>
+              <td th:text="${billingInfo.getCountry()}"></td>
+            </tr>
+            <tr>
+              <th>City:</th>
+              <td th:text="${billingInfo.getCity()}"></td>
+            </tr>
+            <tr>
+              <th>Address:</th>
+              <td th:text="${billingInfo.getAddress()}"></td>
+            </tr>
+            <tr>
+              <th>Zipcode:</th>
+              <td th:text="${billingInfo.getZipcode()}"></td>
+            </tr>
+            <tr>
+              <th>Email:</th>
+              <td th:text="${billingInfo.getEmail()}"></td>
+            </tr>
+            <tr>
+              <th>Phone:</th>
+              <td th:text="${billingInfo.getPhone()}"></td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="order-info">
+          <h3>Order Information</h3>
+          <table th:each="item: ${productsList}">
+            <tr>
+              <th>Book Name:</th>
+              <td th:text="${item.getName()}"></td>
+            </tr>
+            <tr>
+              <th>Book Price:</th>
+              <td th:text="${item.getPrice()}"></td>
+            </tr>
+            <tr>
+              <th>Book Quantity :</th>
+              <td th:text="${item.getQuantity()}"></td>
+            </tr>
+            <tr>
+              <th>---------------------</th>
+              <th>---------------------</th>
+            </tr>
+          </table>
+          <h5>Total Price: <span th:text="${totalprice}"></span><span> USD</span></h5>
+        </div>
+
+      </div>
+      <div th:unless="${paymentStatus}">
+        <h5 class="text-danger">Payment: FAILED</h5>
+        <p class="text-danger">Unsuccessful payment. </p>
+        <button class="btn btn-success try_again">Please Try Again</button>
+        <button class="btn btn-primary back_main_button">Back to shopping </button>
       </div>
     </div>
   </div>
