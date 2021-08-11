@@ -82,28 +82,28 @@
         </table>
       </div>
 
-<!--      <div>-->
-<!--        <h3>Order Information</h3>-->
-<!--        <table th:each="item: ${order.getShoppingCart()}">-->
-<!--          <tr>-->
-<!--            <th>Book Name:</th>-->
-<!--            <td th:text="${item.getName()}"></td>-->
-<!--          </tr>-->
-<!--          <tr>-->
-<!--            <th>Book Price:</th>-->
-<!--            <td th:text="${item.getPrice()}"></td>-->
-<!--          </tr>-->
-<!--          <tr>-->
-<!--            <th>Book Quentity :</th>-->
-<!--            <td th:text="${item.getQuantity()}"></td>-->
-<!--          </tr>-->
-<!--          <tr>-->
-<!--            <th>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</th>-->
-<!--            <th>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</th>-->
-<!--          </tr>-->
-<!--        </table>-->
-<!--        <h5>Total Price: <span></span><span>USD</span></h5>-->
-<!--      </div>-->
+      <div>
+        <h3>Order Information</h3>
+        <table th:each="item: ${productsList}">
+          <tr>
+            <th>Book Name:</th>
+            <td th:text="${item.getName()}"></td>
+          </tr>
+          <tr>
+            <th>Book Price:</th>
+            <td th:text="${item.getPrice()}"></td>
+          </tr>
+          <tr>
+            <th>Book Quentity :</th>
+            <td th:text="${item.getQuantity()}"></td>
+          </tr>
+          <tr>
+            <th>---------------------</th>
+            <th>---------------------</th>
+          </tr>
+        </table>
+        <h5>Total Price: <span></span><span>USD</span></h5>
+      </div>
     </div>
   </div>
 </div>
