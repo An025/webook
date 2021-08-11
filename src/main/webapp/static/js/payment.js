@@ -243,7 +243,7 @@ function showConfirmPaymentButton(){
     let makePayment = document.createElement("button")
     makePayment.type = "button";
     makePayment.addEventListener("click", ()=>{
-        //window.location = "/confirmation";
+        window.location = "/confirmation";
     })
     makePayment.innerText = "Confirm payment";
     makePayment.className = "btn btn-danger";
