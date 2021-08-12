@@ -285,6 +285,9 @@ a {
     padding-bottom: 20px;
 }
 
+.book-img{
+    height: 300px;
+}
 #total-price{
     margin-top: 20px;
 }
