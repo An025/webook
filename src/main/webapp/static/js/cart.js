@@ -1,5 +1,6 @@
 window.onload = function (){
     init()
+
 }
 
 function init() {
@@ -7,6 +8,7 @@ function init() {
     createCheckOutButton();
     //Set event listener for input event on modal input fields.
     clearPrevHighlight();
+    addToCart();
 }
 
 function createCheckOutButton(){
@@ -122,7 +124,7 @@ function proceedToPayment(){
 function sendJSON(city, name, email, phone, country, zipcode, address){
     const data = {name: name.value, city: city.value, email: email.value, phone: phone.value, country: country.value, zipcode: zipcode.value, address: address.value};
     fetch('/billing/', {
-        method: 'POST', // or 'PUT'
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -246,6 +248,18 @@ function changeQuantity(directionOfChange, productID){
         fetch("/changeQuantity/" + directionOfChange + "/" + productID)
             .then(response => response.json())
             .then(getDataForCart);
+        addToCart();
     }
+
+function addToCart(productID){
+    console.log("clicked");
+    fetch("/addToCart/" + productID)
+        .then(response=> response.json())
+        .then(numberOfItemsInCart => updateCartItemCounter(numberOfItemsInCart))
+}
+
+function updateCartItemCounter(numberOfItemsInCart){
+    document.getElementById('counter-box').innerText = numberOfItemsInCart;
+}
 
 
