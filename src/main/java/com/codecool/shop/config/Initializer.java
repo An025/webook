@@ -9,6 +9,8 @@ import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -16,9 +18,11 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class Initializer implements ServletContextListener {
+    private static Logger logger = LoggerFactory.getLogger(Initializer.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        logger.info("Start Initializer");
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
