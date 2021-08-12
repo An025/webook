@@ -9,7 +9,7 @@ target/
 *.iml
 #Order/
 logs
-src/main/resources/Order
+#src/main/resources/Order
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
