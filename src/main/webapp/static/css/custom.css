@@ -106,7 +106,7 @@
 
 #logo
 {
-    background-color: #55A4A6;
+    background-color: #00A3A5;
 }
 #loginBar {
     background-color: #1E777B;
@@ -272,6 +272,22 @@ a {
     min-height: 1.5rem;
     padding-left: 1.5rem
 }
+
+.container{
+    width: 40%;
+}
+
+.order-info tr:nth-child(3){
+    border-bottom: 1px solid #55A4A6;
+    padding-bottom: 10px;
+}
+#thanks{
+    padding-bottom: 20px;
+}
+
+#total-price{
+    margin-top: 20px;
+}
 /*until here copied for sidebar filter*/
 @media screen and (max-width: 1450px) {
     .form-check-input{
@@ -322,6 +338,9 @@ a {
         display: inline-block;
         margin-top: -140px; !important;
         flex-wrap: nowrap;
+    }
+    .container{
+        margin-top: 140px !important;
     }
 
 

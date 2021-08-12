@@ -10,6 +10,7 @@ public class PaymentDetailMem {
     String cvcCode = "";
     String cardNo = "";
     String expDate = "";
+    boolean paid;
 
     public PaymentDetailMem(boolean isPayPal, String email, String password, String name, String cvcCode, String cardNo, String expDate) {
         this.isPayPal = isPayPal;
@@ -19,6 +20,7 @@ public class PaymentDetailMem {
         this.cvcCode = cvcCode;
         this.cardNo = cardNo;
         this.expDate = expDate;
+        this.paid = false;
     }
 
     public boolean isValid(){
@@ -54,5 +56,11 @@ public class PaymentDetailMem {
         return validity;
     }
 
+    public boolean isPaid() {
+        return paid;
+    }
 
+    public void setPaid(boolean paid) {
+        this.paid = paid;
+    }
 }

@@ -4,6 +4,7 @@ window.onload = function (){
 }
 
 function init() {
+    logoImgClick();
     getDataForCart();
     createCheckOutButton();
     //Set event listener for input event on modal input fields.
@@ -260,6 +261,10 @@ function addToCart(productID){
 
 function updateCartItemCounter(numberOfItemsInCart){
     document.getElementById('counter-box').innerText = numberOfItemsInCart;
+    addToCart();
 }
 
-
+function logoImgClick(){
+    let logoImg = document.querySelector("#logoImg");
+    logoImg.addEventListener("click", () => window.location = "/");
+}

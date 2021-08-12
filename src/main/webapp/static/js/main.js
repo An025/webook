@@ -5,6 +5,7 @@ window.onload = function (){
 function init() {
     addToCart();
     initializeAddToCartButtons();
+    logoImgClick();
 
     let clearFilterButton = document.getElementById("clear-filter")
     clearFilterButton.addEventListener("click", ()=> {
@@ -142,3 +143,8 @@ function init() {
             products.appendChild(clone);
         }
         }
+
+    function logoImgClick(){
+        let logoImg = document.querySelector("#logoImg");
+        logoImg.addEventListener("click", () => window.location = "/");
+    }
