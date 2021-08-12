@@ -179,6 +179,7 @@ function sendJSON(data){
                 closeModalWindow();
                 changeOrigTextForPaymentButton();
                 showConfirmPaymentButton();
+                showCancelPaymentButton();
             } else {
                 highLightErrors(newdata);
                 reject("Error in payment details.");
@@ -243,12 +244,26 @@ function showConfirmPaymentButton(){
     let makePayment = document.createElement("button")
     makePayment.type = "button";
     makePayment.addEventListener("click", ()=>{
-        //window.location = "/confirmation";
+        window.location = "/confirmation/true";
     })
     makePayment.innerText = "Confirm payment";
-    makePayment.className = "btn btn-danger";
+    makePayment.className = "btn btn-success";
     makePayment.style.marginTop = "10px";
+    makePayment.style.marginRight = "10px";
     confirmationField.appendChild(makePayment);
+}
+
+function showCancelPaymentButton(){
+    let confirmationField = document.getElementById("confirmation");
+    let cancelPayment = document.createElement("button")
+    cancelPayment.type = "button";
+    cancelPayment.addEventListener("click", ()=>{
+        window.location = "/confirmation/false";
+    })
+    cancelPayment.innerText = "Cancel payment";
+    cancelPayment.className = "btn btn-warning";
+    cancelPayment.style.marginTop = "10px";
+    confirmationField.appendChild(cancelPayment);
 }
 
 

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="author" content="Codecool" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <title>Codecool Shop</title>
+
+  <!-- Bootstrap components -->
+  <!-- Latest compiled and minified Jquery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+  <!--Latest compiled and minified Popper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+          integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+          integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!-- End of Bootstrap components -->
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+  <script src="/static/js/confirmation.js"></script>
+</head>
+
+<body>
+<div class="jumbotron text-center" id="logo">
+  <img id="logoImg" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/logo.png'" width="200" height="150" alt="" />
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
+  <a class="navbar-brand text-center" >WeBook Confirmation Page</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+</nav>
+<div class="container-page">
+  <div class="row" id="row">
+    <div class="container content-container align-self-center">
+
+      <div th:if="${paymentStatus}">
+        <h2 class="text-center" id="thanks">Thanks for shopping.</h2>
+        <h5 class="text-success">Payment: PAID</h5>
+        <p>Order ID:<span th:text="${orderID}">ID...</span></p>
+        <div class="billing-info" >
+          <h3>Billing Information</h3>
+          <table>
+            <tr>
+              <th>Name:</th>
+              <td th:text="${billingInfo.getName()}"></td>
+            </tr>
+            <tr>
+              <th>Country:</th>
+              <td th:text="${billingInfo.getCountry()}"></td>
+            </tr>
+            <tr>
+              <th>City:</th>
+              <td th:text="${billingInfo.getCity()}"></td>
+            </tr>
+            <tr>
+              <th>Address:</th>
+              <td th:text="${billingInfo.getAddress()}"></td>
+            </tr>
+            <tr>
+              <th>Zipcode:</th>
+              <td th:text="${billingInfo.getZipcode()}"></td>
+            </tr>
+            <tr>
+              <th>Email:</th>
+              <td th:text="${billingInfo.getEmail()}"></td>
+            </tr>
+            <tr>
+              <th>Phone:</th>
+              <td th:text="${billingInfo.getPhone()}"></td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="order-info">
+          <h3>Order Information</h3>
+          <table th:each="item: ${productsList}">
+            <tr>
+              <th>Book Name:</th>
+              <td th:text="${item.getName()}"></td>
+            </tr>
+            <tr>
+              <th>Book Price:</th>
+              <td th:text="${item.getPrice()}"></td>
+            </tr>
+            <tr>
+              <th>Book Quantity :</th>
+              <td th:text="${item.getQuantity()}"></td>
+            </tr>
+          </table>
+          <h5 id="total-price" >Total Price: <strong><span th:text="${totalprice}"></span></strong><span> USD</span></h5>
+        </div>
+
+      </div>
+      <div th:unless="${paymentStatus}">
+        <h5 class="text-danger">Payment: FAILED</h5>
+        <p class="text-danger">Unsuccessful payment. </p>
+        <button class="btn btn-success try_again">Please Try Again</button>
+        <button class="btn btn-primary back_main_button">Back to shopping </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:if="${paymentStatus}">
+  <div  th:replace="footer.html :: copy"></div>
+</div>
+
+
+
+</body>
+</html>

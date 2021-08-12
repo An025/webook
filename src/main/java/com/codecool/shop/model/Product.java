@@ -61,6 +61,10 @@ public class Product extends BaseModel {
         this.supplier.addProduct(this);
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
