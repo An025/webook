@@ -94,7 +94,7 @@ function init() {
         data
             .filter(filtered => categories.includes(filtered.productCategory.name) && suppliers.includes(filtered.supplier.name))
             // .map(filtered => console.log(filtered));
-            .map(filtered => displayProductCards(filtered.name, filtered.description, filtered.defaultPrice, filtered.id));
+            .map(filtered => displayProductCards(filtered.name, filtered.description, filtered.defaultPrice, filtered.id, filtered.productCategory.name));
         initializeAddToCartButtons();
     }
 
@@ -132,14 +132,16 @@ function init() {
             }
         }
 
-        function displayProductCards(dataName, dataDesc, dataPrice, dataID) {
+        function displayProductCards(dataName, dataDesc, dataPrice, dataID, dataCategory) {
             const products = document.querySelector('#products');
             const template = document.querySelector("#productsTemplate");
             const clone = document.importNode(template.content, true);
             clone.querySelector('#product-name').textContent = dataName;
+            clone.querySelector('#product-img').src= `/static/img/${dataCategory}_${dataID}.jpg`;
+            clone.querySelector('#product-img').classList.add("book-img");
             clone.querySelector('.add-to-cart').id = dataID;
             clone.querySelector('#product-description').textContent = dataDesc;
-            clone.querySelector('#product-price').textContent = dataPrice;
+            clone.querySelector('#product-price').textContent = dataPrice.toFixed(1) + ' USD';
             products.appendChild(clone);
         }
         }
