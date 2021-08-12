@@ -7,6 +7,8 @@ import com.codecool.shop.service.ProductServiceHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,9 +28,12 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/billing/"})
 public class BillingInfo extends HttpServlet {
-        @Override
+    private static Logger logger = LoggerFactory.getLogger(BillingInfo.class);
+
+    @Override
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ProductService productService = ProductServiceHelper.getDataForProduct();
+            logger.info("Create Billing Info");
             String line = null;
             StringBuffer jb = new StringBuffer();
             BufferedReader reader = request.getReader();

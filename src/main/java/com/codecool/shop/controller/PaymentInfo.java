@@ -8,6 +8,8 @@ import com.codecool.shop.service.ProductServiceHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +25,8 @@ import java.util.UUID;
 
 @WebServlet(urlPatterns = {"/payment/"})
 public class PaymentInfo extends HttpServlet{
+    private static Logger logger = LoggerFactory.getLogger(BillingInfo.class);
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String line = null;
@@ -39,9 +43,12 @@ public class PaymentInfo extends HttpServlet{
         if (paymentValidity){
             CartDaoMem.getInstance().setPaymentDetail(paymentInfo);
             CartDaoMem.getInstance().setOrderID(UUID.randomUUID());
+            logger.info("Valid payment");
         } else {
             PaymentDetailMem falseMemory = null;
             CartDaoMem.getInstance().setPaymentDetail(falseMemory);
+            logger.info("Invalid payment");
+
         }
 
         String convertedObject = gson.toJson(paymentInfo);
