@@ -3,6 +3,9 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.writer.LocalFileWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -17,6 +20,8 @@ import java.util.UUID;
 
 @WebServlet(urlPatterns = {"/confirmation/*"})
 public class ConfirmationController extends HttpServlet {
+    private static Logger logger = LoggerFactory.getLogger(BillingInfo.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -25,9 +30,13 @@ public class ConfirmationController extends HttpServlet {
 
         if(req.getPathInfo().equals("/true")){
             CartDaoMem.getInstance().getPaymentDetail().setPaid(true);
+            logger.info("Success payment");
         }else{
             CartDaoMem.getInstance().getPaymentDetail().setPaid(false);
+            logger.error("Unsuccess payment");
+
         }
+        LocalFileWriter.serialize();
         ArrayList<Product> productsInfo = CartDaoMem.getInstance().getAll();
         float totalPrice = 0.0F;
         for(Product product: productsInfo ){
@@ -39,5 +48,6 @@ public class ConfirmationController extends HttpServlet {
         context.setVariable("billingInfo", billingInfo);
         context.setVariable("paymentStatus", CartDaoMem.getInstance().getPaymentDetail().isPaid());
         engine.process("product/confirmation.html", context, resp.getWriter());
+        logger.info("End Confirmation");
     }
 }
