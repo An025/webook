@@ -16,7 +16,7 @@ import java.util.*;
 
 public class GmailMailer {
 
-    public static void sendMail(){
+    public static void sendMail(String recipient, String name, String ordermessage){
 
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", true);
@@ -42,16 +42,17 @@ public class GmailMailer {
         }
         try {
             message.setRecipients(
-                    Message.RecipientType.TO, InternetAddress.parse("kovesdi.petra@gmail.com"));
-            message.setSubject("Testing Subject");
+                    Message.RecipientType.TO, InternetAddress.parse(recipient));
+            message.setSubject("WBook Team - Codecool shop project - Order Details (do not worry, not real :-))");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
 
-        String msg = "Hello,\n" +
-                "Tesztelés CodeCool shop-hoz." +
-                "\nÜdv, Petra";
+        String msg = "Hi "+ name +",<br/>" +
+                "<br/>Thank you for shopping at WBook. Your order details:<br/>" +
+                 ordermessage +
+                "<br/>Kind regards,<br/>WBook Team; Ani, Máté, Tomi, Petra";
 
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
         try {

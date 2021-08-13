@@ -26,7 +26,7 @@ public class Mailer extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        GmailMailer.sendMail();
+        GmailMailer.sendMail("kovesdi.petra@gmail.com", "Petra", "Doing some tests.");
         resp.sendRedirect("/");
     }
 }
