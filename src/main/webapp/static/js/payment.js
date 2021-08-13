@@ -55,14 +55,14 @@ function setModalContent(){
         let paymentDetailDiv = document.createElement("div");
         let savechangesbtn = document.querySelector("#save-changes");
         //It can be hidden if no payment method was chosen, so it needs a reset.
-        savechangesbtn.style.display = "display";
+        savechangesbtn.style.visibility = "visible";
         let content = "";
         switch (paymentMethod) {
             case "none":
                 let message = document.createElement("p");
                 message.innerText = "Please choose payment method first.";
                 paymentForm.appendChild(message);
-                savechangesbtn.style.display = "none";
+                savechangesbtn.style.visibility = "hidden";
                 reject("No payment method was chosen.");
                 break;
             case "paypal":
