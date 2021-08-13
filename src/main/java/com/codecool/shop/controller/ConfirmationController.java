@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.service.GmailMailer;
 import com.codecool.shop.writer.LocalFileWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = {"/confirmation/*"})
 public class ConfirmationController extends HttpServlet {
@@ -42,6 +44,20 @@ public class ConfirmationController extends HttpServlet {
         for(Product product: productsInfo ){
             totalPrice += product.getDefaultPrice() * product.getQuantity();
         }
+
+        if (CartDaoMem.getInstance().getPaymentDetail().isPaid()){
+            StringBuilder order = new StringBuilder()
+                    .append("Total price: " + totalPrice + " USD<br/>")
+                    .append("List of products: <br/>")
+                    .append(CartDaoMem.getInstance().getAll().stream()
+                            .map(x->"" + x.getName() + "; quantity: " + x.getQuantity() + "; price: " + (x.getPriceForCalc() * x.getQuantity()) +" USD <br/>")
+                            .collect(Collectors.joining()))
+                    .append("Order ID: " + CartDaoMem.getInstance().getOrderID() +"<br/>")
+                    .append("Shipment address: " + billingInfo.getAddress() + "<br/>");
+            GmailMailer.sendMail(billingInfo.getEmail(), billingInfo.getName(), order.toString());
+        }
+
+
         context.setVariable("productsList", productsInfo);
         context.setVariable("totalprice", totalPrice);
         context.setVariable("orderID", CartDaoMem.getInstance().getOrderID());
