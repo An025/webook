@@ -9,12 +9,19 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.dao.jdbc.ProductDaoJdbc;
+import com.codecool.shop.databasemanager.BookDatabaseManager;
+
+import javax.sql.DataSource;
 
 public class ProductServiceHelper {
 
     public static ProductService getDataForProduct() {
-//    ProductDao productDataStore = ProductDaoMem.getInstance();
+        //if(jdbc)
+        BookDatabaseManager bookDatabaseManager = new BookDatabaseManager();
+        DataSource datasource = bookDatabaseManager.connect();
     ProductDao productDataStore = ProductDaoJdbc.getInstance();
+    //else
+    //    ProductDao productDataStore = ProductDaoMem.getInstance();
     ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
     SupplierDao supplierDao = SupplierDaoMem.getInstance();
     CartDao cartDao = CartDaoMem.getInstance();
