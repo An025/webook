@@ -8,11 +8,13 @@ import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.jdbc.ProductDaoJdbc;
 
 public class ProductServiceHelper {
 
     public static ProductService getDataForProduct() {
-    ProductDao productDataStore = ProductDaoMem.getInstance();
+//    ProductDao productDataStore = ProductDaoMem.getInstance();
+    ProductDao productDataStore = ProductDaoJdbc.getInstance();
     ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
     SupplierDao supplierDao = SupplierDaoMem.getInstance();
     CartDao cartDao = CartDaoMem.getInstance();
