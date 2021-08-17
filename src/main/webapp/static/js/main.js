@@ -26,7 +26,6 @@ function init() {
 
 
     function addToCart(productID){
-        console.log("clicked");
         fetch("/addToCart/" + productID)
             .then(response=> response.json())
             .then(numberOfItemsInCart => updateCartItemCounter(numberOfItemsInCart))

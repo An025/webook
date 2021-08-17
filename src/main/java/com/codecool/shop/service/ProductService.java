@@ -59,6 +59,10 @@ public class ProductService{
         cartDao.remove(ID);
     }
 
+    public void addProductToCart(Product product){
+        cartDao.add(product);
+    }
+
     public void setAddress(BillingInfoMem billingInfoMem) {
         cartDao.setBillingInfo(billingInfoMem);
     }
