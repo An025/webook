@@ -46,8 +46,8 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
-    public void remove(int id) {
-        data.remove(find(id));
+    public void removeProductFromCart(Product product) {
+
     }
 
     @Override

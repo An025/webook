@@ -28,7 +28,10 @@ public class OrderChanger extends HttpServlet {
         int productID = Integer.parseInt(pathInfo[2]);
         ProductService productService = ProductServiceHelper.getDataForProduct();
         for (Product product : productService.getAllProductFromCart()) {
-            if (product.getId() == productID && product.quantity > 1 && directionOfChange.equals("-")) {
+            if (product.getId() == productID && directionOfChange.equals("Delete")) {
+                productService.removeProductFromCart(product);
+                break;
+            } else if (product.getId() == productID && product.quantity > 1 && directionOfChange.equals("-")) {
 //                product.quantity = product.quantity - 1;
                 productService.decreaseAmountOfProductInCart(product);
                 break;
@@ -38,9 +41,7 @@ public class OrderChanger extends HttpServlet {
                 break;
             }
         }
-        if (directionOfChange.equals("Delete")) {
-            productService.removeProductFromCart(productID);
-        }
+
         PrintWriter out = response.getWriter();
         out.print(1);
         out.flush();

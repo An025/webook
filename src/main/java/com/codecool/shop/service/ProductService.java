@@ -55,8 +55,8 @@ public class ProductService{
         return cartDao.getAll();
     }
 
-    public void removeProductFromCart(int ID){
-        cartDao.remove(ID);
+    public void removeProductFromCart(Product product){
+        cartDao.removeProductFromCart(product);
     }
 
     public void addProductToCart(Product product){

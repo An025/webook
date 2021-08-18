@@ -66,7 +66,23 @@ public class CartDaoJdbc implements CartDao {
     }
 
     @Override
-    public void remove(int id) {
+    public void removeProductFromCart(Product product) {
+        int idOfActiveOrder;
+        if (!doesCustomerHaveActiveOrder()) {
+            idOfActiveOrder = createNewActiveOrder();
+        } else {
+            idOfActiveOrder = getIdOfActiveOrder();
+        }
+        int productId = product.getId();
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "DELETE FROM productamount WHERE productid = ? AND orderid =? ";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, productId);
+            st.setInt(2, idOfActiveOrder);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
