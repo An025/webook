@@ -3,17 +3,20 @@ package com.codecool.shop.dao.jdbc;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementation.BillingInfoMem;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CartDaoJdbc implements CartDao {
     private static CartDaoJdbc instance = null;
     private static DataSource dataSource;
     private static int sampleUserId = 1;
-    private static int ACTIVEORDER = 1;
+    private static int ACTIVEORDER = 1; // 1 = active order exist, 0= no;
 
+    private ArrayList<Product> data = new ArrayList<>();
 
     public static CartDaoJdbc getInstance(DataSource dataSource) {
         if (instance == null) {
@@ -34,8 +37,7 @@ public class CartDaoJdbc implements CartDao {
                 idOfActiveOrder = getIdOfActiveOrder();
             }
             int productId = product.getId();
-            int amountOfProductInCart = amountOfProductInCart(product);
-            System.out.println(amountOfProductInCart);
+            int amountOfProductInCart = amountOfProductInCart(product, idOfActiveOrder);
             if (amountOfProductInCart > 0) {
                 increaseAmountOfProductInCartByOne(product, amountOfProductInCart, idOfActiveOrder);
             } else {
@@ -75,15 +77,37 @@ public class CartDaoJdbc implements CartDao {
 
     @Override
     public ArrayList<Product> getAll() {
-        return null;
+        data.clear();
+        int idOfActiveOrder = getIdOfActiveOrder();
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT product.id, product.name,product.defaultprice, product.defaultcurrency, productamount.amount FROM product\n" +
+                    "INNER JOIN productamount on product.id = productamount.productid\n" +
+                    "WHERE orderid = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, idOfActiveOrder);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) { // while result set pointer is positioned before or on last row read authors
+                Product product = new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getFloat(3),
+                        rs.getString(4),
+                        rs.getInt(5));
+                data.add(product);
+            }
+            return data;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading product with id: ");
+        }
     }
 
-    public int amountOfProductInCart(Product product) {
+    public int amountOfProductInCart(Product product, int idOfActiveOrder) {
         int productId = product.getId();
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT amount FROM productamount WHERE productid = ?";
+            String sql = "SELECT amount FROM productamount WHERE productid = ? AND orderid = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, productId);
+            st.setInt(2, idOfActiveOrder);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) {
                 return 0;
