@@ -45,9 +45,9 @@ public class Shopper extends HttpServlet {
                 numberOfItemsInCart = numberOfItemsInCart + product.quantity;
             }
         } catch (NumberFormatException e) {
-//            for (Product product : productService.getAllProductFromCart()) {
-//                numberOfItemsInCart = numberOfItemsInCart + product.quantity;
-//            }
+            for (Product product : productService.getAllProductFromCart()) {
+                numberOfItemsInCart = numberOfItemsInCart + product.quantity;
+            }
         }
         System.out.println(numberOfItemsInCart);
         PrintWriter out = response.getWriter();

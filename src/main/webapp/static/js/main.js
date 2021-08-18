@@ -3,7 +3,7 @@ window.onload = function (){
 }
 
 function init() {
-    // addToCart();
+    addToCart();
     initializeAddToCartButtons();
     logoImgClick();
 

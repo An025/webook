@@ -11,6 +11,7 @@ import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.dao.jdbc.CartDaoJdbc;
 import com.codecool.shop.dao.jdbc.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.jdbc.ProductDaoJdbc;
+import com.codecool.shop.dao.jdbc.SupplierDaoJdbc;
 import com.codecool.shop.databasemanager.BookDatabaseManager;
 
 import javax.sql.DataSource;
@@ -21,14 +22,18 @@ public class ProductServiceHelper {
         //if(jdbc)
         BookDatabaseManager bookDatabaseManager = new BookDatabaseManager();
         DataSource datasource = bookDatabaseManager.connect();
-//        ProductDao productDataStore = ProductDaoJdbc.getInstance(datasource);
+
+        ProductDao productDataStore = ProductDaoJdbc.getInstance(datasource);
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(datasource);
         CartDao cartDao = CartDaoJdbc.getInstance(datasource);
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+//        SupplierDao supplierDao = SupplierDaoJdbc.getInstance(datasource);
+
         //else
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(datasource);
+//        ProductDao productDataStore = ProductDaoMem.getInstance();
+//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+//        CartDao cartDao = CartDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
-//    CartDao cartDao = CartDaoMem.getInstance();
+
     return new ProductService(productDataStore, productCategoryDataStore, supplierDao, cartDao);
 }
 }
