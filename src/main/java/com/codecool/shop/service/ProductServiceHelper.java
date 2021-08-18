@@ -21,12 +21,13 @@ public class ProductServiceHelper {
         //if(jdbc)
         BookDatabaseManager bookDatabaseManager = new BookDatabaseManager();
         DataSource datasource = bookDatabaseManager.connect();
-        ProductDao productDataStore = ProductDaoJdbc.getInstance(datasource);
+//        ProductDao productDataStore = ProductDaoJdbc.getInstance(datasource);
         CartDao cartDao = CartDaoJdbc.getInstance(datasource);
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         //else
-    //    ProductDao productDataStore = ProductDaoMem.getInstance();
-    ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(datasource);
-    SupplierDao supplierDao = SupplierDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(datasource);
+        SupplierDao supplierDao = SupplierDaoMem.getInstance();
 //    CartDao cartDao = CartDaoMem.getInstance();
     return new ProductService(productDataStore, productCategoryDataStore, supplierDao, cartDao);
 }

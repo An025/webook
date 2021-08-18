@@ -40,8 +40,6 @@ public class Shopper extends HttpServlet {
             int productId = Integer.parseInt(pathInfo[1]);
             Product productPutIntoCart = productService.getProduct(productId);
             productService.addProductToCart(productPutIntoCart);
-//            CartDao cartDao = CartDaoMem.getInstance();
-//            cartDao.add(productPutIntoCart);
 //            for (Product product : productService.getAllProductFromCart()) {
 //                numberOfItemsInCart = numberOfItemsInCart + product.quantity;
 //            }

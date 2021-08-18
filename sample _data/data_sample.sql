@@ -2,8 +2,8 @@ ALTER TABLE IF EXISTS ONLY customer DROP CONSTRAINT IF EXISTS fk_billingId CASCA
 ALTER TABLE IF EXISTS ONLY product DROP CONSTRAINT IF EXISTS fk_supplierId CASCADE;
 ALTER TABLE IF EXISTS ONLY product DROP CONSTRAINT IF EXISTS fk_categoryId CASCADE;
 ALTER TABLE IF EXISTS ONLY orderdetails DROP CONSTRAINT IF EXISTS fk_userId CASCADE;
-ALTER TABLE IF EXISTS ONLY orderdetails DROP CONSTRAINT IF EXISTS fk_productAmountId CASCADE;
--- ALTER TABLE IF EXISTS ONLY productAmount DROP CONSTRAINT IF EXISTS fk_orderId CASCADE;
+-- ALTER TABLE IF EXISTS ONLY orderdetails DROP CONSTRAINT IF EXISTS fk_productAmountId CASCADE;
+ALTER TABLE IF EXISTS ONLY productAmount DROP CONSTRAINT IF EXISTS fk_orderId CASCADE;
 ALTER TABLE IF EXISTS ONLY productAmount DROP CONSTRAINT IF EXISTS fk_productId CASCADE;
 
 
@@ -22,7 +22,7 @@ CREATE TABLE customer (
         name VARCHAR(20) NOT NULL,
         email VARCHAR(20) NOT NULL,
         password VARCHAR(20) NOT NULL,
-        billingId INTEGER NOT NULL
+        billingId INTEGER
 );
 
 CREATE TABLE product (
@@ -40,7 +40,8 @@ CREATE TABLE orderdetails (
         id serial PRIMARY KEY,
         orderTime timestamp without time zone,
         userId INTEGER NOT NULL,
-        productAmountId INTEGER NOT NULL
+--         productAmountId INTEGER NOT NULL,
+        isActiveOrder INTEGER
 );
 
 CREATE TABLE supplier (
@@ -63,7 +64,7 @@ CREATE TABLE billingInfo (
 
 CREATE TABLE productAmount(
         id serial PRIMARY KEY,
---         orderId INTEGER NOT NULL,
+        orderId INTEGER NOT NULL,
         productId INTEGER NOT NULL,
         amount INTEGER NOT NULL
 );
@@ -77,11 +78,11 @@ ALTER TABLE ONLY customer
     ADD CONSTRAINT fk_billingId FOREIGN KEY (billingId) REFERENCES billingInfo(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY orderdetails
-    ADD CONSTRAINT fk_userId FOREIGN KEY (userId) REFERENCES customer(id) ON DELETE CASCADE,
-    ADD CONSTRAINT fk_productAmountId FOREIGN KEY (productAmountId) REFERENCES productAmount(id) ON DELETE CASCADE ;
+    ADD CONSTRAINT fk_userId FOREIGN KEY (userId) REFERENCES customer(id) ON DELETE CASCADE;
+--     ADD CONSTRAINT fk_productAmountId FOREIGN KEY (productAmountId) REFERENCES productAmount(id) ON DELETE CASCADE ;
 
 ALTER TABLE ONLY productAmount
---     ADD CONSTRAINT fk_orderId FOREIGN KEY (orderId) REFERENCES orderdetails(id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_orderId FOREIGN KEY (orderId) REFERENCES orderdetails(id) ON DELETE CASCADE,
     ADD CONSTRAINT fk_productId FOREIGN KEY (productId) REFERENCES product(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY product
@@ -99,5 +100,8 @@ INSERT INTO category (name) VALUES
 
 INSERT INTO product (name, description, picturePath, defaultPrice, defaultCurrency, categoryId, supplierId) VALUES
 ('Cracking the Coding Interview', 'I'' am not a recruiter.','src/main/webapp/static/img/product_1.jpg', 30, 'USD', 2, 1),
-('Other very good book', 'Description.','src/main/webapp/static/img/product_1.jpg', 30, 'USD', 1, 2);
+('Other very good book', 'Description.','src/main/webapp/static/img/product_1.jpg', 30, 'USD', 1, 2),
+('Good book', 'I'' am not a recruiter.','src/main/webapp/static/img/product_1.jpg', 30, 'USD', 2, 1);
 
+INSERT INTO customer (id,name, email, password) VALUES
+(1,'Example Customer', 'customer@example.com','password');
