@@ -29,10 +29,12 @@ public class OrderChanger extends HttpServlet {
         ProductService productService = ProductServiceHelper.getDataForProduct();
         for (Product product : productService.getAllProductFromCart()) {
             if (product.getId() == productID && product.quantity > 1 && directionOfChange.equals("-")) {
-                product.quantity = product.quantity - 1;
+//                product.quantity = product.quantity - 1;
+                productService.decreaseAmountOfProductInCart(product);
                 break;
             } else if (product.getId() == productID && directionOfChange.equals("+")) {
-                product.quantity = product.quantity + 1;
+//                product.quantity = product.quantity + 1;
+                productService.addProductToCart(product);
                 break;
             }
         }

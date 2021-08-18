@@ -16,5 +16,5 @@ public interface CartDao {
     void remove(int id);
     void setBillingInfo(BillingInfoMem billingInfoMem);
     ArrayList<Product> getAll();
-
+    void decreaseAmountOfProductInCartByOne(Product product);
 }

@@ -76,6 +76,12 @@ public class CartDaoMem implements CartDao {
             return data;
         }
 
+    @Override
+    public void decreaseAmountOfProductInCartByOne(Product product) {
+
+
+    }
+
     public BillingInfoMem getBillingInfoMem() {
         return billingInfoMem;
     }

@@ -101,6 +101,7 @@ public class CartDaoJdbc implements CartDao {
         }
     }
 
+
     public int amountOfProductInCart(Product product, int idOfActiveOrder) {
         int productId = product.getId();
         try (Connection conn = dataSource.getConnection()) {
@@ -125,6 +126,28 @@ public class CartDaoJdbc implements CartDao {
             String sql = "UPDATE productamount SET amount = ? WHERE productid = ? AND orderid =? ";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, amountOfProductInCart + 1);
+            st.setInt(2, productId);
+            st.setInt(3, idOfActiveOrder);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void decreaseAmountOfProductInCartByOne(Product product) {
+        int idOfActiveOrder;
+        if (!doesCustomerHaveActiveOrder()) {
+            idOfActiveOrder = createNewActiveOrder();
+        } else {
+            idOfActiveOrder = getIdOfActiveOrder();
+        }
+        int productId = product.getId();
+        int amountOfProductInCart = amountOfProductInCart(product, idOfActiveOrder);
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "UPDATE productamount SET amount = ? WHERE productid = ? AND orderid =? ";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, amountOfProductInCart - 1);
             st.setInt(2, productId);
             st.setInt(3, idOfActiveOrder);
             st.executeUpdate();
