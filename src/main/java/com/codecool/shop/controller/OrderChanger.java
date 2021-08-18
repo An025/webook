@@ -37,7 +37,7 @@ public class OrderChanger extends HttpServlet {
                 break;
             } else if (product.getId() == productID && directionOfChange.equals("+")) {
 //                product.quantity = product.quantity + 1;
-                productService.addProductToCart(product);
+                productService.increaseAmountOfProductInCart(product);
                 break;
             }
         }

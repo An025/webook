@@ -77,7 +77,13 @@ public class CartDaoMem implements CartDao {
         }
 
     @Override
+    public void increaseAmountOfProductInCartByOne(Product product) {
+
+    }
+
+    @Override
     public void decreaseAmountOfProductInCartByOne(Product product) {
+
 
 
     }

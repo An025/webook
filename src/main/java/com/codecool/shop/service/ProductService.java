@@ -67,6 +67,10 @@ public class ProductService{
         cartDao.decreaseAmountOfProductInCartByOne(product);
     }
 
+    public void increaseAmountOfProductInCart(Product product){
+        cartDao.increaseAmountOfProductInCartByOne(product);
+    }
+
     public void setAddress(BillingInfoMem billingInfoMem) {
         cartDao.setBillingInfo(billingInfoMem);
     }

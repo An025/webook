@@ -39,7 +39,7 @@ public class CartDaoJdbc implements CartDao {
             int productId = product.getId();
             int amountOfProductInCart = amountOfProductInCart(product, idOfActiveOrder);
             if (amountOfProductInCart > 0) {
-                increaseAmountOfProductInCartByOne(product, amountOfProductInCart, idOfActiveOrder);
+                increaseAmountOfProductInCartByOne(product);
             } else {
                 try (Connection conn = dataSource.getConnection()) {
                     String sql = "INSERT INTO productamount (orderid, productid, amount) VALUES (?, ?, ?)";
@@ -118,6 +118,7 @@ public class CartDaoJdbc implements CartDao {
     }
 
 
+
     public int amountOfProductInCart(Product product, int idOfActiveOrder) {
         int productId = product.getId();
         try (Connection conn = dataSource.getConnection()) {
@@ -136,7 +137,15 @@ public class CartDaoJdbc implements CartDao {
     }
 
 
-    public void increaseAmountOfProductInCartByOne(Product product, int amountOfProductInCart, int idOfActiveOrder) {
+    public void increaseAmountOfProductInCartByOne(Product product) {
+        int idOfActiveOrder;
+
+        if (!doesCustomerHaveActiveOrder()) {
+            idOfActiveOrder = createNewActiveOrder();
+        } else {
+            idOfActiveOrder = getIdOfActiveOrder();
+        }
+        int amountOfProductInCart = amountOfProductInCart(product,idOfActiveOrder);
         int productId = product.getId();
         try (Connection conn = dataSource.getConnection()) {
             String sql = "UPDATE productamount SET amount = ? WHERE productid = ? AND orderid =? ";
