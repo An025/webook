@@ -13,7 +13,6 @@ import com.codecool.shop.dao.jdbc.CartDaoJdbc;
 import com.codecool.shop.dao.jdbc.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.jdbc.ProductDaoJdbc;
 import com.codecool.shop.dao.jdbc.SupplierDaoJdbc;
-import com.codecool.shop.databasemanager.BookDatabaseManager;
 
 import javax.sql.DataSource;
 import java.io.FileNotFoundException;
@@ -30,11 +29,9 @@ public class ProductServiceHelper {
         SupplierDao supplierDao = null;
         if(Init.getInitType().equals("database")){
             System.out.println("database");
-            BookDatabaseManager bookDatabaseManager = new BookDatabaseManager();
-            DataSource datasource = bookDatabaseManager.connect();
-            productDataStore = ProductDaoJdbc.getInstance(datasource);
-            productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(datasource);
-            cartDao = CartDaoJdbc.getInstance(datasource);
+            productDataStore = ProductDaoJdbc.getInstance();
+            productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
+            cartDao = CartDaoJdbc.getInstance();
             //            supplierDao = SupplierDaoJdbc.getInstance(datasource);
             supplierDao = SupplierDaoMem.getInstance();
         }
