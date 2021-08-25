@@ -9,7 +9,6 @@ function init() {
     createCheckOutButton();
     //Set event listener for input event on modal input fields.
     clearPrevHighlight();
-    addToCart();
 }
 
 function createCheckOutButton(){
@@ -261,7 +260,6 @@ function addToCart(productID){
 
 function updateCartItemCounter(numberOfItemsInCart){
     document.getElementById('counter-box').innerText = numberOfItemsInCart;
-    addToCart();
 }
 
 function logoImgClick(){

@@ -46,8 +46,12 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
-    public void remove(int id) {
-        data.remove(find(id));
+    public void removeProductFromCart(Product product) {
+        for (Product productInCart: data){
+            if(productInCart.getId() == product.getId()){
+                data.remove(productInCart);
+            }
+        }
     }
 
     @Override
@@ -75,6 +79,24 @@ public class CartDaoMem implements CartDao {
         public ArrayList<Product> getAll () {
             return data;
         }
+
+    @Override
+    public void increaseAmountOfProductInCartByOne(Product product) {
+        for (Product productInCart: data){
+            if(productInCart.getId() == product.getId()){
+                productInCart.quantity = productInCart.quantity + 1;
+            }
+        }
+    }
+
+    @Override
+    public void decreaseAmountOfProductInCartByOne(Product product) {
+        for (Product productInCart: data){
+            if(productInCart.getId() == product.getId()){
+                productInCart.quantity = productInCart.quantity - 1;
+            }
+        }
+    }
 
     public BillingInfoMem getBillingInfoMem() {
         return billingInfoMem;

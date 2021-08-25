@@ -55,8 +55,20 @@ public class ProductService{
         return cartDao.getAll();
     }
 
-    public void removeProductFromCart(int ID){
-        cartDao.remove(ID);
+    public void removeProductFromCart(Product product){
+        cartDao.removeProductFromCart(product);
+    }
+
+    public void addProductToCart(Product product){
+        cartDao.add(product);
+    }
+
+    public void decreaseAmountOfProductInCart(Product product){
+        cartDao.decreaseAmountOfProductInCartByOne(product);
+    }
+
+    public void increaseAmountOfProductInCart(Product product){
+        cartDao.increaseAmountOfProductInCartByOne(product);
     }
 
     public void setAddress(BillingInfoMem billingInfoMem) {

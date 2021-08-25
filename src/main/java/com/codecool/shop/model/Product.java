@@ -18,6 +18,26 @@ public class Product extends BaseModel {
         this.setProductCategory(productCategory);
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", defaultPrice=" + defaultPrice +
+                ", defaultCurrency=" + defaultCurrency +
+                ", productCategory=" + productCategory +
+                ", supplier=" + supplier +
+                ", quantity=" + quantity +
+                '}';
+    }
+
+    public Product(int id, String name, float defaultPrice, String currencyString, int amount) {
+        super(name, id);
+        this.setPrice(defaultPrice, currencyString);
+        this.quantity = amount;
+    }
+
     public float getDefaultPrice() {
         return defaultPrice;
     }
@@ -69,18 +89,7 @@ public class Product extends BaseModel {
         return quantity;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", defaultPrice=" + defaultPrice +
-                ", defaultCurrency=" + defaultCurrency +
-                ", productCategory=" + productCategory +
-                ", supplier=" + supplier +
-                '}';
-    }
+
     //    @Override
 //    public String toString() {
 //        return String.format("id: %1$d, " +

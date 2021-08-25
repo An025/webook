@@ -13,8 +13,9 @@ public interface CartDao {
 
     void add(Product product);
     Product find(int id);
-    void remove(int id);
+    void removeProductFromCart(Product product);
     void setBillingInfo(BillingInfoMem billingInfoMem);
     ArrayList<Product> getAll();
-
+    void increaseAmountOfProductInCartByOne(Product product);
+    void decreaseAmountOfProductInCartByOne(Product product);
 }

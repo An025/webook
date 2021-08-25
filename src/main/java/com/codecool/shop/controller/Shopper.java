@@ -39,9 +39,9 @@ public class Shopper extends HttpServlet {
         try {
             int productId = Integer.parseInt(pathInfo[1]);
             Product productPutIntoCart = productService.getProduct(productId);
-            CartDao cartDao = CartDaoMem.getInstance();
-            cartDao.add(productPutIntoCart);
+            productService.addProductToCart(productPutIntoCart);
             for (Product product : productService.getAllProductFromCart()) {
+                System.out.println(product.quantity);
                 numberOfItemsInCart = numberOfItemsInCart + product.quantity;
             }
         } catch (NumberFormatException e) {
@@ -49,6 +49,7 @@ public class Shopper extends HttpServlet {
                 numberOfItemsInCart = numberOfItemsInCart + product.quantity;
             }
         }
+        System.out.println(numberOfItemsInCart);
         PrintWriter out = response.getWriter();
         out.print(numberOfItemsInCart);
         out.flush();
