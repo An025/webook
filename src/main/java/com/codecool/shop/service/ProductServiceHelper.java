@@ -24,22 +24,6 @@ import java.util.Properties;
 public class ProductServiceHelper {
 
     public static ProductService getDataForProduct() {
-//<<<<<<< HEAD
-//        //if(jdbc)
-//        BookDatabaseManager bookDatabaseManager = new BookDatabaseManager();
-//        DataSource datasource = bookDatabaseManager.connect();
-//
-//        ProductDao productDataStore = ProductDaoJdbc.getInstance(datasource);
-//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(datasource);
-//        CartDao cartDao = CartDaoJdbc.getInstance(datasource);
-////        SupplierDao supplierDao = SupplierDaoJdbc.getInstance(datasource);
-//
-//        //else
-////        ProductDao productDataStore = ProductDaoMem.getInstance();
-////        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-////        CartDao cartDao = CartDaoMem.getInstance();
-//        SupplierDao supplierDao = SupplierDaoMem.getInstance();
-//=======
         ProductDao productDataStore = null;
         ProductCategoryDao productCategoryDataStore = null;
         CartDao cartDao = null;
@@ -61,7 +45,6 @@ public class ProductServiceHelper {
             supplierDao = SupplierDaoMem.getInstance();
             cartDao = CartDaoMem.getInstance();
         }
-//>>>>>>> development
 
     return new ProductService(productDataStore, productCategoryDataStore, supplierDao, cartDao);
 }
