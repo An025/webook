@@ -30,11 +30,11 @@ public class ConfirmationController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
         BillingInfoMem billingInfo = CartDaoMem.getInstance().getBillingInfoMem();
 
-        if(req.getPathInfo().equals("/true")){
-            CartDaoMem.getInstance().getPaymentDetail().setPaid(true);
+        boolean isPaid = req.getPathInfo().equals("/true") ? true : false;
+
+        if(isPaid){
             logger.info("Success payment");
         }else{
-            CartDaoMem.getInstance().getPaymentDetail().setPaid(false);
             logger.error("Unsuccess payment");
 
         }
@@ -45,7 +45,7 @@ public class ConfirmationController extends HttpServlet {
             totalPrice += product.getDefaultPrice() * product.getQuantity();
         }
 
-        if (CartDaoMem.getInstance().getPaymentDetail().isPaid()){
+        if (isPaid){
             StringBuilder order = new StringBuilder()
                     .append("Total price: " + totalPrice + " USD<br/>")
                     .append("List of products: <br/>")
@@ -62,7 +62,7 @@ public class ConfirmationController extends HttpServlet {
         context.setVariable("totalprice", totalPrice);
         context.setVariable("orderID", CartDaoMem.getInstance().getOrderID());
         context.setVariable("billingInfo", billingInfo);
-        context.setVariable("paymentStatus", CartDaoMem.getInstance().getPaymentDetail().isPaid());
+        context.setVariable("paymentStatus", isPaid);
         engine.process("product/confirmation.html", context, resp.getWriter());
         logger.info("End Confirmation");
     }

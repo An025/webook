@@ -86,8 +86,7 @@ function sendPaymentInfo(paymentMethod){
     savechangesbtn.onclick = function (){
         removePrevConfirmationButton();
         readInputValues(paymentMethod)
-            .then((data) => sendJSON(data));
-
+            .then((data) => handleDataDisplay(data));
     };
 
 }
@@ -155,38 +154,51 @@ function createCreditCardMethodDetails(){
 
 }
 
-function sendJSON(data){
+function handleDataDisplay(data){
+    displayPaymentDetails(data)
+    let isValid = validateData(data);
+    if (isValid) {
+        closeModalWindow();
+        changeOrigTextForPaymentButton();
+        showConfirmPaymentButton();
+        showCancelPaymentButton()
+    } else {
+        highLightErrors(data)
+    }
 
-    fetch('/payment/', {
-        method: 'POST', // or 'PUT'
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-        .then(response => response.json())
-        .then(newdata => new Promise((resolve,reject)=>
-        {
-            let validity = true;
-            for (key in newdata) {
-                if (newdata[key] == "error"){
-                    validity = false;
-                }
-            }
-            if (validity) {
-                resolve();
-                displayPaymentDetails(newdata);
-                closeModalWindow();
-                changeOrigTextForPaymentButton();
-                showConfirmPaymentButton();
-                showCancelPaymentButton();
-            } else {
-                highLightErrors(newdata);
-                reject("Error in payment details.");
-            }
+}
 
-        }))
-        .catch((message)=>console.log(message));
+function validateData(data){
+    let validity = true;
+    if (data.isPayPal){
+        if (! data.email.match("[a-zA-Z._]+@[a-zA-Z]+\\.(com|hu)")){
+            data.email = "error";
+            validity = false;
+        }
+        if (data.password == ""){
+            data.password = "error";
+            validity = false;
+        }
+    } else {
+        if (! data.name.match("[a-zA-Z ]+")){
+            data.name = "error";
+            validity = false;
+        }
+        if (! data.cardNo.match("[0-9]{16}")){
+            data.cardNo = "error";
+            validity = false;
+        }
+        if (! data.expDate.match("[0-9]{2}/[0-9]{2}")){
+            data.expDate = "error";
+            validity = false;
+        }
+        if (! data.cvcCode.match("[0-9]{3}")){
+            data.cvcCode = "error";
+            validity = false;
+        }
+    }
+
+    return validity;
 
 }
 
@@ -207,6 +219,9 @@ function displayPaymentDetails(data){
     detailsContainer.innerHTML = content;
 
 }
+
+
+
 
 function highLightErrors(data){
     for (key in data){
