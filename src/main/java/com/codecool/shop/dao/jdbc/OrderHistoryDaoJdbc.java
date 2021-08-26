@@ -32,8 +32,9 @@ public class OrderHistoryDaoJdbc implements OrderHistoryDao {
 
     @Override
     public ArrayList<Order> getAllOrders() {
+        orders.clear();
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT ordertime, isactiveorder, id, userid FROM orderdetails\n" +
+            String sql = "SELECT ordertime, orderstatus, id, userid  FROM orderdetails\n" +
                     "WHERE userid = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, sampleUserId);

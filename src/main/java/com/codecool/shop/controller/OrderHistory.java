@@ -26,10 +26,6 @@ public class OrderHistory extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        BookDatabaseManager bookDatabaseManager = new BookDatabaseManager();
-        DataSource datasource = bookDatabaseManager.connect();
-        OrderHistoryDao orderHistory = OrderHistoryDaoJdbc.getInstance(datasource);
-        System.out.println(orderHistory.getAllOrders());
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         engine.process("product/orderhistory.html", context, resp.getWriter());

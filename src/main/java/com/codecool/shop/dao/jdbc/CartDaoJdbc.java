@@ -183,10 +183,11 @@ public class CartDaoJdbc implements CartDao {
 
     public int createNewActiveOrder() {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO orderdetails (userid, isactiveorder) VALUES (?, ?)";
+            String sql = "INSERT INTO orderdetails (userid, isactiveorder, orderstatus) VALUES (?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, sampleUserId);
             st.setInt(2, ACTIVEORDER);
+            st.setString(3, "in progress");
             st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
             rs.next();
