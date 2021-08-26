@@ -53,14 +53,6 @@ function displayOrderHistory(orders){
             let priceName = document.createElement("td");
             priceName.innerText = product.defaultPrice;
             productRow.appendChild(priceName);
-            // productCard.appendChild(priceRow);
-            // let productName = document.createElement("div");
-            // productName.innerText = "product name: " + product.name + "product price: " + product.defaultPrice;;
-            // productCard.appendChild(productName);
-            // let productPrice = document.createElement("div");
-            // productPrice.innerText =
-            // productCard.appendChild(productPrice);
-            // card.appendChild(productCard)
         }
     }
 }
