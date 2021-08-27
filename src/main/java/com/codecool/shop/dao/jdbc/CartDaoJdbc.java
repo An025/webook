@@ -241,4 +241,18 @@ public class CartDaoJdbc implements CartDao {
             throw new RuntimeException("Error while checking cart");
         }
     }
+
+
+    public void inactiveOrder() {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "UPDATE orderdetails SET isactiveorder = ? WHERE userid = ? AND isactiveorder = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, 0);
+            st.setInt(2, sampleUserId);
+            st.setInt(3, ACTIVEORDER);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while checking cart");
+        }
+    }
     }
