@@ -243,7 +243,7 @@ public class CartDaoJdbc implements CartDao {
     }
 
 
-    public void inactiveOrder() {
+    public void inactivateOrder() {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "UPDATE orderdetails SET isactiveorder = ? WHERE userid = ? AND isactiveorder = ?";
             PreparedStatement st = conn.prepareStatement(sql);
