@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
-import com.codecool.shop.databasemanager.BookDatabaseManager;
 
 @WebServlet(urlPatterns = {"/orderhistory"})
 public class OrderHistory extends HttpServlet {

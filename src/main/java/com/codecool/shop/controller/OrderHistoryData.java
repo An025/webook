@@ -2,7 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.OrderHistoryDao;
 import com.codecool.shop.dao.jdbc.OrderHistoryDaoJdbc;
-import com.codecool.shop.databasemanager.BookDatabaseManager;
+import com.codecool.shop.config.databasemanager.DatabaseConnection;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.service.ProductServiceHelper;
 import com.google.gson.Gson;
@@ -20,8 +20,8 @@ import java.io.PrintWriter;
 public class OrderHistoryData extends HttpServlet {
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            BookDatabaseManager bookDatabaseManager = new BookDatabaseManager();
-            DataSource datasource = bookDatabaseManager.connect();
+//            DatabaseConnection bookDatabaseManager = new DatabaseConnection();
+            DataSource datasource = DatabaseConnection.connect();
             OrderHistoryDao orderHistory = OrderHistoryDaoJdbc.getInstance(datasource);
             Gson gson = new Gson();
             String jsonString = gson.toJson(orderHistory.getAllOrders());
