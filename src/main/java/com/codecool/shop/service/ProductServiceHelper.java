@@ -13,7 +13,6 @@ import com.codecool.shop.dao.jdbc.CartDaoJdbc;
 import com.codecool.shop.dao.jdbc.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.jdbc.ProductDaoJdbc;
 import com.codecool.shop.dao.jdbc.SupplierDaoJdbc;
-import com.codecool.shop.databasemanager.BookDatabaseManager;
 
 import javax.sql.DataSource;
 import java.io.FileNotFoundException;
@@ -24,33 +23,15 @@ import java.util.Properties;
 public class ProductServiceHelper {
 
     public static ProductService getDataForProduct() {
-//<<<<<<< HEAD
-//        //if(jdbc)
-//        BookDatabaseManager bookDatabaseManager = new BookDatabaseManager();
-//        DataSource datasource = bookDatabaseManager.connect();
-//
-//        ProductDao productDataStore = ProductDaoJdbc.getInstance(datasource);
-//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(datasource);
-//        CartDao cartDao = CartDaoJdbc.getInstance(datasource);
-////        SupplierDao supplierDao = SupplierDaoJdbc.getInstance(datasource);
-//
-//        //else
-////        ProductDao productDataStore = ProductDaoMem.getInstance();
-////        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-////        CartDao cartDao = CartDaoMem.getInstance();
-//        SupplierDao supplierDao = SupplierDaoMem.getInstance();
-//=======
         ProductDao productDataStore = null;
         ProductCategoryDao productCategoryDataStore = null;
         CartDao cartDao = null;
         SupplierDao supplierDao = null;
         if(Init.getInitType().equals("database")){
             System.out.println("database");
-            BookDatabaseManager bookDatabaseManager = new BookDatabaseManager();
-            DataSource datasource = bookDatabaseManager.connect();
-            productDataStore = ProductDaoJdbc.getInstance(datasource);
-            productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(datasource);
-            cartDao = CartDaoJdbc.getInstance(datasource);
+            productDataStore = ProductDaoJdbc.getInstance();
+            productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
+            cartDao = CartDaoJdbc.getInstance();
             //            supplierDao = SupplierDaoJdbc.getInstance(datasource);
             supplierDao = SupplierDaoMem.getInstance();
         }
@@ -61,7 +42,6 @@ public class ProductServiceHelper {
             supplierDao = SupplierDaoMem.getInstance();
             cartDao = CartDaoMem.getInstance();
         }
-//>>>>>>> development
 
     return new ProductService(productDataStore, productCategoryDataStore, supplierDao, cartDao);
 }

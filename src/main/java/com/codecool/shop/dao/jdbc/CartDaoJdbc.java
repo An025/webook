@@ -1,14 +1,13 @@
 package com.codecool.shop.dao.jdbc;
 
+import com.codecool.shop.config.databasemanager.DatabaseConnection;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementation.BillingInfoMem;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CartDaoJdbc implements CartDao {
     private static CartDaoJdbc instance = null;
@@ -18,10 +17,10 @@ public class CartDaoJdbc implements CartDao {
 
     private ArrayList<Product> data = new ArrayList<>();
 
-    public static CartDaoJdbc getInstance(DataSource dataSource) {
+    public static CartDaoJdbc getInstance() {
         if (instance == null) {
             instance = new CartDaoJdbc();
-            CartDaoJdbc.dataSource = dataSource;
+            CartDaoJdbc.dataSource = DatabaseConnection.connect();
         }
         return instance;
     }

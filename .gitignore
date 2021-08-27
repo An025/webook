@@ -10,7 +10,7 @@ target/
 #Order/
 logs
 src/main/resources/Order
-
+src/main/resources/connection.properties
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

@@ -1,5 +1,6 @@
 package com.codecool.shop.dao.jdbc;
 
+import com.codecool.shop.config.databasemanager.DatabaseConnection;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
@@ -18,10 +19,10 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
     private static ProductCategoryDaoJdbc instance = null;
     private static DataSource dataSource;
 
-    public static ProductCategoryDaoJdbc getInstance(DataSource dataSource) {
+    public static ProductCategoryDaoJdbc getInstance() {
         if (instance == null) {
             instance = new ProductCategoryDaoJdbc();
-            ProductCategoryDaoJdbc.dataSource = dataSource;
+            ProductCategoryDaoJdbc.dataSource = DatabaseConnection.connect();
         }
         return instance;
     }

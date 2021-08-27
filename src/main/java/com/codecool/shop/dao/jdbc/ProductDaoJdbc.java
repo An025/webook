@@ -1,7 +1,7 @@
 package com.codecool.shop.dao.jdbc;
 
+import com.codecool.shop.config.databasemanager.DatabaseConnection;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -17,10 +17,10 @@ public class ProductDaoJdbc implements ProductDao {
     private static ProductDaoJdbc instance = null;
     private static DataSource dataSource;
 
-    public static ProductDaoJdbc getInstance(DataSource dataSource) {
+    public static ProductDaoJdbc getInstance() {
         if (instance == null) {
             instance = new ProductDaoJdbc();
-            ProductDaoJdbc.dataSource = dataSource;
+            ProductDaoJdbc.dataSource = DatabaseConnection.connect();
         }
         return instance;
     }
