@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 
 @WebServlet(urlPatterns = {"/registration"})
 public class Registration extends HttpServlet {
-    private static Logger logger = LoggerFactory.getLogger(BillingInfo.class);
+    private static Logger logger = LoggerFactory.getLogger(Registration.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,4 +26,6 @@ public class Registration extends HttpServlet {
         engine.process("product/registration.html", context, resp.getWriter());
         logger.info("Load Registration page");
     }
+
+
 }
