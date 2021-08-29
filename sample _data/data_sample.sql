@@ -41,7 +41,8 @@ CREATE TABLE orderdetails (
         orderTime timestamp without time zone,
         userId INTEGER NOT NULL,
 --         productAmountId INTEGER NOT NULL,
-        isActiveOrder INTEGER
+        isActiveOrder INTEGER,
+        orderStatus VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE supplier (
@@ -105,3 +106,14 @@ INSERT INTO product (name, description, picturePath, defaultPrice, defaultCurren
 
 INSERT INTO customer (id,name, email, password) VALUES
 (1,'Example Customer', 'customer@example.com','password');
+
+INSERT INTO orderdetails (ordertime, userid, isactiveorder, orderstatus) VALUES
+('2021-05-26 07:06:19.000000', 1,1,'in progress'),
+('2021-03-26 07:06:19.000000', 1,0,'in progress'),
+('2021-01-26 07:06:19.000000', 1,0,'in progress');
+
+INSERT INTO productamount (orderid, productid, amount) VALUES
+(1, 1, 2),
+(1, 2, 3),
+(2, 1, 1),
+(3, 2, 4);

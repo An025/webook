@@ -21,13 +21,7 @@ public class Product extends BaseModel {
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", defaultPrice=" + defaultPrice +
-                ", defaultCurrency=" + defaultCurrency +
-                ", productCategory=" + productCategory +
-                ", supplier=" + supplier +
+                "name='" + name + '\'' +
                 ", quantity=" + quantity +
                 '}';
     }
