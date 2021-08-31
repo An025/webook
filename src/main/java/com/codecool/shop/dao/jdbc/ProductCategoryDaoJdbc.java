@@ -5,6 +5,8 @@ import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCategoryDaoJdbc implements ProductCategoryDao {
+    private static Logger logger = LoggerFactory.getLogger(ProductDaoJdbc.class);
+
     private List<Product> data = new ArrayList<>();
     private static ProductCategoryDaoJdbc instance = null;
     private static DataSource dataSource;
@@ -22,6 +26,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
     public static ProductCategoryDaoJdbc getInstance() {
         if (instance == null) {
             instance = new ProductCategoryDaoJdbc();
+            logger.info("ProductCategoryDao CONNECT");
             ProductCategoryDaoJdbc.dataSource = DatabaseConnection.connect();
         }
         return instance;
