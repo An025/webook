@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -26,7 +27,9 @@ public class OrderChanger extends HttpServlet {
         System.out.println(pathInfo[2]);
         String directionOfChange = pathInfo[1];
         int productID = Integer.parseInt(pathInfo[2]);
-        ProductService productService = ProductServiceHelper.getDataForProduct();
+        HttpSession session=request.getSession();
+        int id =(int) session.getAttribute("id");
+        ProductService productService = ProductServiceHelper.getDataForProduct(id);
         for (Product product : productService.getAllProductFromCart()) {
             if (product.getId() == productID && directionOfChange.equals("Delete")) {
                 productService.removeProductFromCart(product);

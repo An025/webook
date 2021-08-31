@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -34,7 +35,9 @@ public class Shopper extends HttpServlet {
         // put items into cart
         // sends out the number of items in cart
         String[] pathInfo = request.getPathInfo().split("/");
-        ProductService productService = ProductServiceHelper.getDataForProduct();
+        HttpSession session=request.getSession();
+        int id =(int) session.getAttribute("id");
+        ProductService productService = ProductServiceHelper.getDataForProduct(id);
         int numberOfItemsInCart = 0;
         try {
             int productId = Integer.parseInt(pathInfo[1]);

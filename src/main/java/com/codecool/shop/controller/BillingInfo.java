@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,7 +33,9 @@ public class BillingInfo extends HttpServlet {
 
     @Override
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            ProductService productService = ProductServiceHelper.getDataForProduct();
+            HttpSession session=request.getSession();
+            int id =(int) session.getAttribute("id");
+            ProductService productService = ProductServiceHelper.getDataForProduct(id);
             logger.info("Create Billing Info");
             String line = null;
             StringBuffer jb = new StringBuffer();

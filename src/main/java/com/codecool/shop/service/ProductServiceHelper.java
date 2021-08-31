@@ -15,6 +15,7 @@ import com.codecool.shop.dao.jdbc.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.jdbc.ProductDaoJdbc;
 import com.codecool.shop.dao.jdbc.SupplierDaoJdbc;
 
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,7 +30,7 @@ public class ProductServiceHelper {
         }
     }
 
-    public static ProductService getDataForProduct() {
+    public static ProductService getDataForProduct(int id) {
         getDataType();
         ProductDao productDataStore = null;
         ProductCategoryDao productCategoryDataStore = null;
@@ -38,7 +39,7 @@ public class ProductServiceHelper {
         if(dataType.equals("database")){
             productDataStore = ProductDaoJdbc.getInstance();
             productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
-            cartDao = CartDaoJdbc.getInstance();
+            cartDao = CartDaoJdbc.getInstance(id);
             //            supplierDao = SupplierDaoJdbc.getInstance(datasource);
             supplierDao = SupplierDaoMem.getInstance();
         }

@@ -19,12 +19,13 @@ public class OrderHistoryDaoJdbc implements OrderHistoryDao {
     private static DataSource dataSource;
     private ArrayList<Order> orders = new ArrayList<>();
     ArrayList<Product> productsInOrder = new ArrayList<>();
-    private static int sampleUserId = 1;
+    private static int sampleUserId = 0;
 
-    public static OrderHistoryDaoJdbc getInstance(DataSource dataSource) {
+    public static OrderHistoryDaoJdbc getInstance(DataSource dataSource, int id) {
         if (instance == null) {
             instance = new OrderHistoryDaoJdbc();
             OrderHistoryDaoJdbc.dataSource = dataSource;
+            sampleUserId = id;
         }
         return instance;
     }

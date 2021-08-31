@@ -12,14 +12,15 @@ import java.util.ArrayList;
 public class CartDaoJdbc implements CartDao {
     private static CartDaoJdbc instance = null;
     private static DataSource dataSource;
-    private static int sampleUserId = 1;
+    private static int sampleUserId = 0;
     private static int ACTIVEORDER = 1; // 1 = active order exist, 0= no;
 
     private ArrayList<Product> data = new ArrayList<>();
 
-    public static CartDaoJdbc getInstance() {
+    public static CartDaoJdbc getInstance(int id) {
         if (instance == null) {
             instance = new CartDaoJdbc();
+            sampleUserId = id;
             CartDaoJdbc.dataSource = DatabaseConnection.connect();
         }
         return instance;
