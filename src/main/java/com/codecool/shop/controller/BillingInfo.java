@@ -33,9 +33,7 @@ public class BillingInfo extends HttpServlet {
 
     @Override
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            HttpSession session=request.getSession();
-            int id =(int) session.getAttribute("id");
-            ProductService productService = ProductServiceHelper.getDataForProduct(id);
+            ProductService productService = ProductServiceHelper.getDataForProduct();
             logger.info("Create Billing Info");
             String line = null;
             StringBuffer jb = new StringBuffer();

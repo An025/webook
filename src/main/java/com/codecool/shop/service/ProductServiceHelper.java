@@ -30,7 +30,7 @@ public class ProductServiceHelper {
         }
     }
 
-    public static ProductService getDataForProduct(int id) {
+    public static ProductService getDataForProduct() {
         getDataType();
         ProductDao productDataStore = null;
         ProductCategoryDao productCategoryDataStore = null;
@@ -39,7 +39,7 @@ public class ProductServiceHelper {
         if(dataType.equals("database")){
             productDataStore = ProductDaoJdbc.getInstance();
             productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
-            cartDao = CartDaoJdbc.getInstance(id);
+            cartDao = CartDaoJdbc.getInstance();
             //            supplierDao = SupplierDaoJdbc.getInstance(datasource);
             supplierDao = SupplierDaoMem.getInstance();
         }

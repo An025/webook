@@ -30,9 +30,7 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session=req.getSession();
-        int id =session.getAttribute("id") == null? 0: (int) session.getAttribute("id");
-        ProductService productService = ProductServiceHelper.getDataForProduct(id);
+        ProductService productService = ProductServiceHelper.getDataForProduct();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 

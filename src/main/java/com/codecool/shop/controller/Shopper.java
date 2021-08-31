@@ -35,9 +35,7 @@ public class Shopper extends HttpServlet {
         // put items into cart
         // sends out the number of items in cart
         String[] pathInfo = request.getPathInfo().split("/");
-        HttpSession session=request.getSession();
-        int id =(int) session.getAttribute("id");
-        ProductService productService = ProductServiceHelper.getDataForProduct(id);
+        ProductService productService = ProductServiceHelper.getDataForProduct();
         int numberOfItemsInCart = 0;
         try {
             int productId = Integer.parseInt(pathInfo[1]);

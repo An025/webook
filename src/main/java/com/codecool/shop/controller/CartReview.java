@@ -21,9 +21,7 @@ import java.util.HashMap;
 public class CartReview extends HttpServlet {
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            HttpSession session=request.getSession();
-            int id =(int) session.getAttribute("id");
-            ProductService productService = ProductServiceHelper.getDataForProduct(id);
+            ProductService productService = ProductServiceHelper.getDataForProduct();
 //            String json = new Gson().toJson(productService.getAllProductFromCart());
 //            System.out.println(productService.getAllProductFromCart());
             Gson gson = new Gson();

@@ -27,9 +27,7 @@ public class OrderChanger extends HttpServlet {
         System.out.println(pathInfo[2]);
         String directionOfChange = pathInfo[1];
         int productID = Integer.parseInt(pathInfo[2]);
-        HttpSession session=request.getSession();
-        int id =(int) session.getAttribute("id");
-        ProductService productService = ProductServiceHelper.getDataForProduct(id);
+        ProductService productService = ProductServiceHelper.getDataForProduct();
         for (Product product : productService.getAllProductFromCart()) {
             if (product.getId() == productID && directionOfChange.equals("Delete")) {
                 productService.removeProductFromCart(product);
