@@ -55,7 +55,7 @@
                         <!-- Password -->
                         <input type="password" id="password" class="form-control" name="password" placeholder="Password" >
 
-
+                        <p th:if="${error != null}" th:text="${error}" class="error"></p>
                         <button class="btn  my-4 btn-block waves-effect waves-light btn-secondary"  disabled="disabled" type="submit" id="login" >Log in</button>
 
                     </form>

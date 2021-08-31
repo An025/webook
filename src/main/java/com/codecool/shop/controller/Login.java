@@ -34,12 +34,16 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         CustomerDao customer = CustomerDaoJdbc.getInstance();
         Customer registeredCustomer = customer.find(email, password);
         if(registeredCustomer == null){
-            doGet(req, resp);
+            TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+            WebContext context = new WebContext(req, resp, req.getServletContext());
+            context.setVariable("error", "Invalid email or password. ");
+            engine.process("product/login.html", context, resp.getWriter());
             logger.error("There is no such customer in the database");
         }else{
             HttpSession session=req.getSession();
