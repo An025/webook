@@ -1,51 +1,35 @@
-// window.onload = function(){
-//     init();
-// }
-//
-// function init(){
-//     getRegistrationInfo();
-// }
-//
-//
-//
-// function validation(){
-//     let validity = true;
-//
-//
-//     return validity
-// }
-//
-// function getRegistrationInfo(){
-//     let firstName = document.getElementById('firstName');
-//     let lastName = document.getElementById('lastName');
-//     let email = document.getElementById('email');
-//     let password1 = document.getElementById('password');
-//     let password2 = document.getElementById('password2');
-//     let submitButton = document.getElementById('sign-in');
-//     submitButton.addEventListener('click', (e)=>{
-//         if(validation()){
-//             sendRegistrationInfo(firstName, lastName, email, password1, password2);
-//         } else{
-//         alert("something went wrong");
-//         }
-//     })
-// }
-//
-// function sendRegistrationInfo(firstName, lastName, email, password1){
-//     const data = {name : firstName.value, email: email.value, password1: password1.value};
-//     console.log(data.name)
-//     fetch('/newuser', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(data),
-//         })
-//         .then(response => response.json())
-//         .then((data) => {
-//             console.log('Success:', data);
-//         })
-//         .catch((error) => {
-//             console.error('Error:', error);
-//         });
-// }
+window.onload = function(){
+    init();
+}
+
+function init(){
+    getRegistrationInfo();
+}
+
+
+function getRegistrationInfo(){
+    let password1 = document.getElementById('password1');
+    let password2 = document.getElementById('password2');
+    password1.addEventListener("input", (e) =>validPassword(password1))
+    password2.addEventListener("input", (e) =>validAndMatchPassword(password1, password2))
+}
+
+function validPassword(data){
+    if(data.value.length< 8){
+        data.style.borderColor = "red";
+    }else{
+        data.style.borderColor = "green";
+    }
+}
+
+function validAndMatchPassword(password1, password2){
+    let submitButton = document.getElementById("signin");
+    if(password1.value == password2.value && password2.value.length >=8){
+        password2.style.borderColor = "green";
+        submitButton.removeAttribute("disabled");
+        submitButton.classList.remove("btn-secondary");
+        submitButton.classList.add("btn-info");
+    }else{
+        password2.style.borderColor = "red";
+    }
+}
