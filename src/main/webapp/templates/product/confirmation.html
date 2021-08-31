@@ -46,7 +46,7 @@
   <div class="row" id="row">
     <div class="container content-container align-self-center">
 
-      <div th:if="${paymentStatus}">
+      <div th:if="${paymentStatus}" id="confirm-box">
         <h2 class="text-center" id="thanks">Thanks for shopping.</h2>
         <h5 class="text-success">Payment: PAID</h5>
         <p>Order ID:<span th:text="${orderID}">ID...</span></p>
