@@ -1,6 +1,7 @@
 package com.codecool.shop.model;
 
 public class Customer {
+    int id;
     String name;
     String email;
     String password;
@@ -10,6 +11,14 @@ public class Customer {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getBillingid() {

@@ -35,12 +35,12 @@ public class NewUser extends HttpServlet {
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         String password1 = request.getParameter("password1");
-        String password2 = request.getParameter("password2");
 
         String name = firstName + " " + lastName;
-        Customer customer = new Customer(name, email, password1);
-        CustomerDao saveCustomer = CustomerDaoJdbc.getInstance();
-        saveCustomer.add(customer);
+        Customer newCustomer = new Customer(name, email, password1);
+        CustomerDao customerDao = CustomerDaoJdbc.getInstance();
+        customerDao.add(newCustomer);
+        int customerId = newCustomer.getId();
 //        String line = null;
 //        StringBuffer jb = new StringBuffer();
 //        BufferedReader reader = request.getReader();

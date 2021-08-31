@@ -26,11 +26,13 @@ public class CustomerDaoJdbc implements CustomerDao {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "INSERT INTO customer (id, name, email, password) VALUES (?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            st.setInt(1, lastId() +1 );
+            int id = lastId() + 1;
+            st.setInt(1, id);
             st.setString(2, customer.getName());
             st.setString(3, customer.getEmail());
             st.setString(4, customer.getPassword());
             st.executeUpdate();
+            customer.setId(id);
         } catch (SQLException throwables) {
             throw new RuntimeException("Error while adding new product.", throwables);
         }
@@ -51,8 +53,23 @@ public class CustomerDaoJdbc implements CustomerDao {
         }
     }
     @Override
-    public Customer find(int id) {
+    public Customer find(String email, String password) {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, name FROM customer WHERE email = ? and password= ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, email);
+            st.setString(2, password);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            Customer customer = new Customer(rs.getString(2),email, password);
+            customer.setId(rs.getInt(1));
+            System.out.println("customer " + customer);
         return null;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading product with id: ");
+        }
     }
 
     @Override
