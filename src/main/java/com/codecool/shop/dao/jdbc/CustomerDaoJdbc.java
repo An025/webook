@@ -65,8 +65,7 @@ public class CustomerDaoJdbc implements CustomerDao {
             }
             Customer customer = new Customer(rs.getString(2),email, password);
             customer.setId(rs.getInt(1));
-            System.out.println("customer " + customer);
-        return null;
+        return customer;
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading product with id: ");
         }

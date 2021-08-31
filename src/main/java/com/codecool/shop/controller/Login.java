@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -36,9 +37,17 @@ public class Login extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         CustomerDao customer = CustomerDaoJdbc.getInstance();
-        customer.find(email, password);
-        RequestDispatcher rd = req.getRequestDispatcher("/");
-        rd.forward(req,resp);
-        logger.info("Load login page");
+        Customer registeredCustomer = customer.find(email, password);
+        if(registeredCustomer == null){
+            doGet(req, resp);
+            logger.error("There is no such customer in the database");
+        }else{
+            HttpSession session=req.getSession();
+            session.setAttribute("id", registeredCustomer.getId());
+            session.setAttribute("name",registeredCustomer.getName());
+            RequestDispatcher rd = req.getRequestDispatcher("/");
+            rd.forward(req,resp);
+            logger.info("Find customer in database");
+        }
     }
 }

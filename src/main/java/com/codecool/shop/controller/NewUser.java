@@ -41,16 +41,7 @@ public class NewUser extends HttpServlet {
         CustomerDao customerDao = CustomerDaoJdbc.getInstance();
         customerDao.add(newCustomer);
         int customerId = newCustomer.getId();
-//        String line = null;
-//        StringBuffer jb = new StringBuffer();
-//        BufferedReader reader = request.getReader();
-//        while ((line = reader.readLine()) != null) {
-//            jb.append(line);
-//        }
-//        Gson gson = new Gson();
-//        Customer newUser = gson.fromJson(jb.toString(), Customer.class);
-//        System.out.println(newUser);
-//
+
         //Call ProductController.java
         RequestDispatcher rd = request.getRequestDispatcher("/");
         rd.forward(request,response);
