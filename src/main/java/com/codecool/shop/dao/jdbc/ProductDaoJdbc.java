@@ -93,6 +93,7 @@ public class ProductDaoJdbc implements ProductDao {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) { // while result set pointer is positioned before or on last row read authors
+                data.clear();
                 Supplier supplier = new Supplier(rs.getString(7), rs.getString(8));
                 supplier.setId(rs.getInt(9));
                 Product product = new Product(rs.getString(1),
@@ -104,7 +105,6 @@ public class ProductDaoJdbc implements ProductDao {
                 product.setId(id);
                 data.add(product);
             }
-            System.out.println(data);
             return data;
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading product with id: " + id, e);
