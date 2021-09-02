@@ -25,12 +25,10 @@ public class OrderHistoryData extends HttpServlet {
 
     @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//            DatabaseConnection bookDatabaseManager = new DatabaseConnection();
-            DataSource datasource = DatabaseConnection.connect();
             HttpSession session=request.getSession();
             int id =(int) session.getAttribute("id");
             logger.info("Session id: " + id);
-            OrderHistoryDao orderHistory = OrderHistoryDaoJdbc.getInstance(datasource, id);
+            OrderHistoryDao orderHistory = OrderHistoryDaoJdbc.getInstance(id);
             Gson gson = new Gson();
             String jsonString = gson.toJson(orderHistory.getAllOrders());
             System.out.println(jsonString);
