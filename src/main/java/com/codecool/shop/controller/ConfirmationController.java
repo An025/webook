@@ -4,6 +4,8 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.GmailMailer;
+import com.codecool.shop.service.ProductService;
+import com.codecool.shop.service.ProductServiceHelper;
 import com.codecool.shop.writer.LocalFileWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,8 @@ public class ConfirmationController extends HttpServlet {
 
         boolean isPaid = req.getPathInfo().equals("/true") ? true : false;
 
+        ProductService productService = ProductServiceHelper.getDataForProduct();
+
         if(isPaid){
             logger.info("Success payment");
         }else{
@@ -39,7 +43,7 @@ public class ConfirmationController extends HttpServlet {
 
         }
         LocalFileWriter.serialize();
-        ArrayList<Product> productsInfo = CartDaoMem.getInstance().getAll();
+        ArrayList<Product> productsInfo = productService.getAllProductFromCart();
         float totalPrice = 0.0F;
         for(Product product: productsInfo ){
             totalPrice += product.getDefaultPrice() * product.getQuantity();
@@ -49,10 +53,10 @@ public class ConfirmationController extends HttpServlet {
             StringBuilder order = new StringBuilder()
                     .append("Total price: " + totalPrice + " USD<br/>")
                     .append("List of products: <br/>")
-                    .append(CartDaoMem.getInstance().getAll().stream()
+                    .append(productService.getAllProductFromCart().stream()
                             .map(x->"" + x.getName() + "; quantity: " + x.getQuantity() + "; price: " + (x.getPriceForCalc() * x.getQuantity()) +" USD <br/>")
                             .collect(Collectors.joining()))
-                    .append("Order ID: " + CartDaoMem.getInstance().getOrderID() +"<br/>")
+                    .append("Order ID: " + productService.getIdOfActiveOrder() +"<br/>")
                     .append("Shipment address: " + billingInfo.getAddress() + "<br/>");
             GmailMailer.sendMail(billingInfo.getEmail(), billingInfo.getName(), order.toString());
         }
@@ -60,10 +64,11 @@ public class ConfirmationController extends HttpServlet {
 
         context.setVariable("productsList", productsInfo);
         context.setVariable("totalprice", totalPrice);
-        context.setVariable("orderID", CartDaoMem.getInstance().getOrderID());
+        context.setVariable("orderID", productService.getIdOfActiveOrder());
         context.setVariable("billingInfo", billingInfo);
         context.setVariable("paymentStatus", isPaid);
         engine.process("product/confirmation.html", context, resp.getWriter());
         logger.info("End Confirmation");
+        productService.inactivateOrder();
     }
 }

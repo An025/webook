@@ -26,7 +26,7 @@ public  class LocalFileWriter {
         Writer writer = null;
         try {
             writer = new FileWriter(filename);
-            logger.info("Write this order  " + order.getOrderID() + " to file:" + filename);
+            logger.info("Write this order  " + order.getIdOfActiveOrder() + " to file:" + filename);
 
         } catch (IOException e) {
             logger.error("Write order error: " + e);
@@ -40,7 +40,7 @@ public  class LocalFileWriter {
     private static String saveFile(CartDaoMem order){
         LocalDateTime dateNow = LocalDateTime.now();
         String date = dateNow.getYear() + "." + dateNow.getMonth() + "." + dateNow.getDayOfMonth() + "." + dateNow.getHour() + "." + dateNow.getMinute();
-        String filename = "src/main/resources/Order/" + date  + "_" + order.getOrderID() + ".json";
+        String filename = "src/main/resources/Order/" + date  + "_" + order.getIdOfActiveOrder() + ".json";
         createFile(filename);
         return filename;
     }

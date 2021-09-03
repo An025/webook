@@ -17,11 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCategoryDaoJdbc implements ProductCategoryDao {
-    private static Logger logger = LoggerFactory.getLogger(ProductDaoJdbc.class);
-
-    private List<Product> data = new ArrayList<>();
+    private static Logger logger = LoggerFactory.getLogger(ProductCategoryDaoJdbc.class);
     private static ProductCategoryDaoJdbc instance = null;
     private static DataSource dataSource;
+    private List<ProductCategory> data = new ArrayList<>();
 
     public static ProductCategoryDaoJdbc getInstance() {
         if (instance == null) {
@@ -74,31 +73,21 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
     @Override
     public List<ProductCategory> getAll() {
-//        try (Connection conn = dataSource.getConnection()) {
-//            String sql = "SELECT product.name, product.defaultprice,product.defaultcurrency, product.description,c.id, c.name, s.name, s.description, s.id, product.id FROM productCategory\n" +
-//                    "INNER JOIN category c on product.categoryid = c.id\n" +
-//                    "INNER JOIN supplier s on product.supplierid = s.id";
-//
-//            PreparedStatement st = conn.prepareStatement(sql);
-//            ResultSet rs = st.executeQuery();
-//            if (!rs.next()) {
-//                return null;
-//            }
-//            ProductCategory productCategory = new ProductCategory(rs.getString(6));
-//            productCategory.setId(rs.getInt(5));
-//            Supplier supplier = new Supplier(rs.getString(7), rs.getString(8));
-//            supplier.setId(rs.getInt(9));
-//            Product product = new Product(rs.getString(1),
-//                    rs.getFloat(2),
-//                    rs.getString(3),
-//                    rs.getString(4),
-//                    productCategory,
-//                    supplier);
-//            product.setId(rs.getInt(10));
-//            return null;
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Error while reading product with id: " + e);
-//        }
-        return null;
+        data.clear();
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT name FROM category;";
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                ProductCategory productCategory = new ProductCategory(rs.getString(1));
+                data.add(productCategory);
+            }
+            return data;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading product with id: " + e);
+        }
     }
 }

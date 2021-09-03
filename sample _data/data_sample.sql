@@ -38,7 +38,7 @@ CREATE TABLE product (
 
 CREATE TABLE orderdetails (
         id serial PRIMARY KEY,
-        orderTime timestamp without time zone,
+        orderTime timestamp default current_timestamp,
         userId INTEGER NOT NULL,
 --         productAmountId INTEGER NOT NULL,
         isActiveOrder INTEGER,

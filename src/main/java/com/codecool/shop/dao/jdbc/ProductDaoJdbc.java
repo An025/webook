@@ -83,6 +83,7 @@ public class ProductDaoJdbc implements ProductDao {
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
         int id= productCategory.getId();
+        data.clear();
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT product.name, product.defaultprice,product.defaultcurrency, product.description,c.id, c.name, s.name, s.description, s.id FROM product\n" +
                     "INNER JOIN category c on product.categoryid = c.id\n" +
@@ -93,7 +94,7 @@ public class ProductDaoJdbc implements ProductDao {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) { // while result set pointer is positioned before or on last row read authors
-                data.clear();
+
                 Supplier supplier = new Supplier(rs.getString(7), rs.getString(8));
                 supplier.setId(rs.getInt(9));
                 Product product = new Product(rs.getString(1),

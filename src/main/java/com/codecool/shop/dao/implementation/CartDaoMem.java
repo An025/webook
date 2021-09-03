@@ -17,7 +17,7 @@ public class CartDaoMem implements CartDao {
     private BillingInfoMem billingInfoMem;
     private float totalPrice;
     private PaymentDetailMem paymentDetail;
-    private UUID orderID;
+    private int orderID;
     /* A private Constructor prevents any other class from instantiating.
      */
     private CartDaoMem() {
@@ -59,12 +59,17 @@ public class CartDaoMem implements CartDao {
         this.billingInfoMem = billingInfoMem;
     }
 
-    public void setOrderID(UUID orderID) {
+    public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
 
-    public UUID getOrderID() {
+    public int getIdOfActiveOrder() {
         return orderID;
+    }
+
+    @Override
+    public void inactivateOrder() {
+
     }
 
     public void setPaymentDetail(PaymentDetailMem paymentDetail){
@@ -101,6 +106,7 @@ public class CartDaoMem implements CartDao {
     public BillingInfoMem getBillingInfoMem() {
         return billingInfoMem;
     }
+
 }
 
 

@@ -2,6 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CustomerDao;
+import com.codecool.shop.dao.jdbc.CartDaoJdbc;
 import com.codecool.shop.dao.jdbc.CustomerDaoJdbc;
 import com.codecool.shop.model.Customer;
 import org.slf4j.Logger;
@@ -39,6 +40,9 @@ public class Login extends HttpServlet {
         String password = req.getParameter("password");
         CustomerDao customer = CustomerDaoJdbc.getInstance();
         Customer registeredCustomer = customer.find(email, password);
+        CartDaoJdbc cart = CartDaoJdbc.getInstance();
+        cart.setUserId(registeredCustomer.getId());
+        System.out.println("customer ID during payment" + registeredCustomer.getId());
         if(registeredCustomer == null){
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
             WebContext context = new WebContext(req, resp, req.getServletContext());
