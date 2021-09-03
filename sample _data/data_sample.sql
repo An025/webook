@@ -100,9 +100,15 @@ INSERT INTO category (name) VALUES
 ('Thriller');
 
 INSERT INTO product (name, description, picturePath, defaultPrice, defaultCurrency, categoryId, supplierId) VALUES
-('Cracking the Coding Interview', 'I'' am not a recruiter.','src/main/webapp/static/img/product_1.jpg', 30, 'USD', 2, 1),
-('Other very good book', 'Description.','src/main/webapp/static/img/product_1.jpg', 30, 'USD', 1, 2),
-('Good book', 'I'' am not a recruiter.','src/main/webapp/static/img/product_1.jpg', 30, 'USD', 2, 1);
+('Cracking the Coding Interview', 'I am not a recruiter. I am a software engineer. And as such, I know what it''s like to be asked to whip up brilliant algorithms on the spot and then write flawless code on a whiteboard. I''ve been through this as a candidate and as an interviewer.','src/main/webapp/static/img/Programming_1.jpg', 30, 'USD', 1, 1),
+('Clean Code', 'Even bad code can function. But if code isn''t clean, it can bring a development organization to its knees. Every year, countless hours and significant resources are lost because of poorly written code. But it doesnt have to be that way.','src/main/webapp/static/img/Programming_2.jpg', 32, 'USD', 1, 2),
+('Interviews in Java', 'The core of EPI is a collection of over 250 problems with detailed solutions. The problems are representative of interview questions asked at leading software companies. The problems are illustrated with 200 figures, 300 tested programs, and 150 additional variants.','src/main/webapp/static/img/Programming_3.jpg', 45, 'USD', 1, 1),
+('Billy Summers', 'From legendary storyteller and number-one best seller Stephen King, whose “restless imagination is a power that cannot be contained” (The New York Times Book Review), comes a thrilling new novel about a good guy in a bad job.','src/main/webapp/static/img/Thriller_4.jpg', 52, 'USD', 2, 2),
+('The Therapist', 'The multimillion-copy New York Times bestselling author B.A. Paris returns to her heartland of gripping psychological suspense in The Therapist―a powerful tale of a house that holds a shocking secret.','src/main/webapp/static/img/Thriller_5.jpg', 25, 'USD', 2, 1),
+('The Dark', 'From New York Times and number one Audible best-selling duo Jeremy Robinson and R.C. Bray comes a horrifying revelation about the centuries-old Three Days of Darkness prophecy, during which the legions of Hell will be unleashed','src/main/webapp/static/img/Thriller_6.jpg', 46, 'USD', 2, 1),
+('Foolish Hearts', 'It''s been three years since Ashiya Waters walked away from Russell—and made the biggest mistake of her life. She knows she shouldn''t dwell on the past. Love isn''t meant to last…and nobody taught her that better than her own family.','src/main/webapp/static/img/Romance_7.jpg', 32, 'USD', 3, 2),
+('The Wildest Ride', 'Filled with deep emotion and intense spark, Marcella Bell brings grit, spark and brilliance to western romance! Marcella Bell is one to watch!”—Maisey Yates, New York Times bestselling author','src/main/webapp/static/img/Romance_8.jpg', 27, 'USD', 3, 2),
+('New Moon', 'From evil vampires to a mysterious pack of wolves, new threats of danger and vengeance test Bella and Edward''s romance in the second book of the irresistible Twilight saga.','src/main/webapp/static/img/Romance_9.jpg', 45, 'USD', 3, 1);
 
 INSERT INTO customer (id,name, email, password) VALUES
 (1,'Example Customer', 'customer@example.com','password');

@@ -39,7 +39,6 @@ public class GetProductsByCategory extends HttpServlet {
         ProductService productService = ProductServiceHelper.getDataForProduct();
 
         String json = new Gson().toJson(productService.getAllProduct());
-        System.out.println(json);
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

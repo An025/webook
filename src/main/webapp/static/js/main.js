@@ -6,6 +6,7 @@ function init() {
     addToCart();
     initializeAddToCartButtons();
     logoImgClick();
+    // getBy();
 
     let clearFilterButton = document.getElementById("clear-filter")
     clearFilterButton.addEventListener("click", ()=> {
@@ -52,10 +53,15 @@ function init() {
     //
 
     let searchButton = document.getElementById("filter")
-    searchButton.addEventListener("click", ()=>{
+
+    function getBy() {
         let categoriesForFilter = check("check-category");
         let suppliersForFilter = check("check-supplier");
         getData(categoriesForFilter, suppliersForFilter);
+    }
+
+    searchButton.addEventListener("click", ()=>{
+        getBy();
     });
 
     function clearCheckboxes(checkboxes) {
