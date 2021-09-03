@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 public class DatabaseConnection extends Init {
-    private static Logger logger = LoggerFactory.getLogger(Initializer.class);
+    private static Logger logger = LoggerFactory.getLogger(DatabaseConnection.class);
 
     public static DataSource connect() {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();

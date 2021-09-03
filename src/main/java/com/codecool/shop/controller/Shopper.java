@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ public class Shopper extends HttpServlet {
             Product productPutIntoCart = productService.getProduct(productId);
             productService.addProductToCart(productPutIntoCart);
             for (Product product : productService.getAllProductFromCart()) {
-                System.out.println(product.quantity);
                 numberOfItemsInCart = numberOfItemsInCart + product.quantity;
             }
         } catch (NumberFormatException e) {
@@ -49,7 +49,6 @@ public class Shopper extends HttpServlet {
                 numberOfItemsInCart = numberOfItemsInCart + product.quantity;
             }
         }
-        System.out.println(numberOfItemsInCart);
         PrintWriter out = response.getWriter();
         out.print(numberOfItemsInCart);
         out.flush();

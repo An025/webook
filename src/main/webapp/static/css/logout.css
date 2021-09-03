@@ -1,0 +1,14 @@
+a{
+    text-decoration: none;
+    color: white;
+}
+
+a:hover{
+    color: white;
+}
+
+.form{
+    box-shadow: 10px 5px 5px  #989898;
+    border-color: #989898;
+    margin-top: 20px;
+}

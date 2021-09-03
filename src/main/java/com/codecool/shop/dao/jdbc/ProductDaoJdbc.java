@@ -1,10 +1,14 @@
 package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.config.databasemanager.DatabaseConnection;
+import com.codecool.shop.controller.Registration;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.sql.DataSource;
 
 import java.sql.*;
@@ -12,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoJdbc implements ProductDao {
+    private static Logger logger = LoggerFactory.getLogger(ProductDaoJdbc.class);
 
     private List<Product> data = new ArrayList<>();
     private static ProductDaoJdbc instance = null;
@@ -20,6 +25,7 @@ public class ProductDaoJdbc implements ProductDao {
     public static ProductDaoJdbc getInstance() {
         if (instance == null) {
             instance = new ProductDaoJdbc();
+            logger.info("productDaoJdbc CONNECCT");
             ProductDaoJdbc.dataSource = DatabaseConnection.connect();
         }
         return instance;
@@ -87,6 +93,7 @@ public class ProductDaoJdbc implements ProductDao {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) { // while result set pointer is positioned before or on last row read authors
+                data.clear();
                 Supplier supplier = new Supplier(rs.getString(7), rs.getString(8));
                 supplier.setId(rs.getInt(9));
                 Product product = new Product(rs.getString(1),
@@ -98,7 +105,6 @@ public class ProductDaoJdbc implements ProductDao {
                 product.setId(id);
                 data.add(product);
             }
-            System.out.println(data);
             return data;
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading product with id: " + id, e);

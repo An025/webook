@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public  class Init {
-    private static Logger logger = LoggerFactory.getLogger(Initializer.class);
+    private static Logger logger = LoggerFactory.getLogger(Init.class);
     protected static String USER_NAME;
     protected static String PASSWORD;
     protected static String DATABASE;
@@ -18,8 +18,10 @@ public  class Init {
             Properties prop = new Properties();
             prop.load(reader);
             if (prop.getProperty("data").equals("memory")) {
+                logger.info("Connect memory");
                 return "memory";
             } else {
+                logger.info("Connect database");
                 DATABASE = prop.getProperty("DATABASE");
                 USER_NAME = prop.getProperty("USER_NAME");
                 PASSWORD = prop.getProperty("PASSWORD");

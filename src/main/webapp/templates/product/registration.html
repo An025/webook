@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Codecool Shop</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/static/css/registration.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+    <script src="/static/js/registration.js"></script>
+
+
+</head>
+
+<body>
+<div class="jumbotron text-center" id="logo">
+    <img id="logoImg" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/logo.png'" width="200" height="150" alt="" />
+</div>
+
+<div class="container my-4">
+
+
+    <section id="register-form">
+
+        <div class="row">
+            <div class="col-md-10 mb-6">
+                <section>
+                    <form class="text-center border p-5" action="/newuser" method="post">
+                        <p class="h4 mb-4">Sign Up</p>
+
+                        <div class="form-row mb-4">
+                            <div class="col">
+                                <!-- First name -->
+                                <input type="text" id="firstName" class="form-control" name="firstName" placeholder="First name" required>
+                            </div>
+                            <div class="col">
+                                <!-- Last name -->
+                                <input type="text" id="lastName" class="form-control" name="lastName" placeholder="Last name" required>
+                            </div>
+                        </div>
+
+                        <!-- E-mail -->
+                        <input type="email" id="email" class="form-control mb-4" name="email" placeholder="E-mail" required>
+
+                        <!-- Password -->
+                        <input type="password" id="password1" class="form-control" name="password1" placeholder="Password" >
+                        <small id="passwordInfo" class="form-text text-muted mb-4">
+                            At least 8 characters
+                        </small>
+                        <!-- Password -->
+                        <input type="password" id="password2" class="form-control" name="password2" placeholder="Password again" >
+                        <small id="passwordInfo2" class="form-text text-muted mb-4">
+                            At least 8 characters
+                        </small>
+
+                        <button class="btn  my-4 btn-block waves-effect waves-light btn-secondary"  disabled="disabled" type="submit" id="signin" >Sign in</button>
+
+                   </form>
+                </section>
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>
+
+
