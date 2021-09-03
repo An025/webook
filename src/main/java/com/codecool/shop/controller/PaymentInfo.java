@@ -42,7 +42,7 @@ public class PaymentInfo extends HttpServlet{
 
         if (paymentValidity){
             CartDaoMem.getInstance().setPaymentDetail(paymentInfo);
-            CartDaoMem.getInstance().setOrderID(UUID.randomUUID());
+//            CartDaoMem.getInstance().setOrderID(Integer.valueOf(UUID.randomUUID()));
             logger.info("Valid payment");
         } else {
             PaymentDetailMem falseMemory = null;

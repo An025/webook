@@ -8,11 +8,13 @@ import com.codecool.shop.model.Product;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class CartDaoJdbc implements CartDao {
     private static CartDaoJdbc instance = null;
     private static DataSource dataSource;
-    private static int sampleUserId = 1;
+
+    private int userId = 1;
     private static int ACTIVEORDER = 1; // 1 = active order exist, 0= no;
 
     private ArrayList<Product> data = new ArrayList<>();
@@ -23,6 +25,10 @@ public class CartDaoJdbc implements CartDao {
             CartDaoJdbc.dataSource = DatabaseConnection.connect();
         }
         return instance;
+    }
+
+    public void setUserId(int id){
+        userId = id;
     }
 
     @Override
@@ -184,7 +190,7 @@ public class CartDaoJdbc implements CartDao {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "INSERT INTO orderdetails (userid, isactiveorder, orderstatus) VALUES (?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            st.setInt(1, sampleUserId);
+            st.setInt(1, userId);
             st.setInt(2, ACTIVEORDER);
             st.setString(3, "in progress");
             st.executeUpdate();
@@ -200,7 +206,7 @@ public class CartDaoJdbc implements CartDao {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT * FROM customer WHERE id = ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, sampleUserId);
+            st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) {
                 return false;
@@ -215,7 +221,7 @@ public class CartDaoJdbc implements CartDao {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT * FROM orderdetails WHERE userid = ? AND isactiveorder = ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, sampleUserId);
+            st.setInt(1, userId);
             st.setInt(2, ACTIVEORDER);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) {
@@ -231,7 +237,7 @@ public class CartDaoJdbc implements CartDao {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT id FROM orderdetails WHERE userid = ? AND isactiveorder = ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, sampleUserId);
+            st.setInt(1, userId);
             st.setInt(2, ACTIVEORDER);
             ResultSet rs = st.executeQuery();
             rs.next(); // Read next returned value - in this case the first one. See ResultSet docs for more explaination
@@ -248,11 +254,12 @@ public class CartDaoJdbc implements CartDao {
             String sql = "UPDATE orderdetails SET isactiveorder = ? WHERE userid = ? AND isactiveorder = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, 0);
-            st.setInt(2, sampleUserId);
+            st.setInt(2, userId);
             st.setInt(3, ACTIVEORDER);
             st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error while checking cart");
         }
     }
+
     }

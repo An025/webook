@@ -8,6 +8,7 @@ import com.codecool.shop.model.Supplier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public interface CartDao {
 
@@ -18,4 +19,6 @@ public interface CartDao {
     ArrayList<Product> getAll();
     void increaseAmountOfProductInCartByOne(Product product);
     void decreaseAmountOfProductInCartByOne(Product product);
+    int getIdOfActiveOrder();
+    void inactivateOrder();
 }

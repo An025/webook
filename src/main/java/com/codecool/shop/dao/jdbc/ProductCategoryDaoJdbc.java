@@ -73,12 +73,14 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
     @Override
     public List<ProductCategory> getAll() {
+        data.clear();
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT name FROM category;";
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
+
                 ProductCategory productCategory = new ProductCategory(rs.getString(1));
                 data.add(productCategory);
             }

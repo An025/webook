@@ -48,9 +48,13 @@ public class ProductService{
     public List<Product> getProductsForCategory(int categoryId){
         var category = productCategoryDao.find(categoryId);
         return productDao.getBy(category);
-
-
     }
+
+    public int getIdOfActiveOrder(){
+        return cartDao.getIdOfActiveOrder();
+    }
+
+
     public ArrayList<Product> getAllProductFromCart(){
         return cartDao.getAll();
     }
@@ -74,6 +78,10 @@ public class ProductService{
     public void setAddress(BillingInfoMem billingInfoMem) {
         cartDao.setBillingInfo(billingInfoMem);
     }
+
+    public void inactivateOrder(){cartDao.inactivateOrder();}
+
+
 
 
 }

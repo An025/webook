@@ -47,6 +47,7 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public List<Supplier> getAll() {
+        data.clear();
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT name, description FROM supplier;";
             PreparedStatement st = conn.prepareStatement(sql);
