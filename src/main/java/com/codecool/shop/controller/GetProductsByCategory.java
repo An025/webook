@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.service.ProductServiceHelper;
 import com.google.gson.Gson;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
@@ -33,11 +34,9 @@ public class GetProductsByCategory extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao = SupplierDaoMem.getInstance();
-        CartDao cartDao = CartDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao, cartDao);
+//        ProductDao productDataStore = ProductDaoMem.getInstance();
+//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        ProductService productService = ProductServiceHelper.getDataForProduct();
 
         String json = new Gson().toJson(productService.getAllProduct());
         System.out.println(json);

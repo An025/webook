@@ -40,8 +40,8 @@ public class ProductServiceHelper {
             productDataStore = ProductDaoJdbc.getInstance();
             productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
             cartDao = CartDaoJdbc.getInstance();
-            //            supplierDao = SupplierDaoJdbc.getInstance(datasource);
-            supplierDao = SupplierDaoMem.getInstance();
+            supplierDao = SupplierDaoJdbc.getInstance();
+//            supplierDao = SupplierDaoMem.getInstance();
         }
         else if(dataType.equals("memory")){
             productDataStore = ProductDaoMem.getInstance();
