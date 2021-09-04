@@ -4,9 +4,11 @@ window.onload = function (){
 
 function init() {
     addToCart();
+    getBy();
     initializeAddToCartButtons();
     logoImgClick();
-    // getBy();
+
+
 
     let clearFilterButton = document.getElementById("clear-filter")
     clearFilterButton.addEventListener("click", ()=> {
